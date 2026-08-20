@@ -1,5 +1,14 @@
 # QPainter 7-Day Precision Vector Tracker
 
+## Core Philosophy & Context
+- **The Ultimate Goal**: Achieve the precision, procedural rendering, and capabilities of LaTeX's TikZ engine using Qt's `QPainter`.
+- **The Methodology**: We are taking deliberate "baby steps". We learn and execute one `QPainter` method at a time. This sequence is NOT dictated by the top-to-bottom order of the official Qt documentation, but rather by a structured, logical progression that is highly suitable for a beginner learner.
+- **The Output**: Each logical step or method grouping results in a dedicated, executable project (e.g., `qPainter_001`, `qPainter_002`). We do not move forward until the current method is proven in working code.
+
+This document serves as the master tracking sheet and context anchor to ensure we methodically cover every aspect of the `QPainter` pipeline without losing sight of the end goal.
+
+---
+
 - [ ] **Day 1: Paint Pipeline, State Stack & Basic Settings**
   - [ ] Widget paint lifecycle: Implement [QWidget::paintEvent(QPaintEvent*)](https://doc.qt.io/qt-6.8/qwidget.html#paintEvent) and [QWidget::resizeEvent(QResizeEvent*)](https://doc.qt.io/qt-6.8/qwidget.html#resizeEvent)
   - [ ] Initialize & manage painter: Use [QPainter::begin(QPaintDevice*)](https://doc.qt.io/qt-6.8/qpainter.html#begin), [QPainter::end()](https://doc.qt.io/qt-6.8/qpainter.html#end), and verify with [QPainter::isActive()](https://doc.qt.io/qt-6.8/qpainter.html#isActive)

@@ -173,8 +173,8 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` setPen(Qt::PenStyle style)
 - `[00]` setPen(const QColor &color)
 - `[01]` setPen(const QPen &pen)
-- `[00]` setRenderHint(
-- `[00]` setRenderHints(
+- `[01]` setRenderHint(QPainter::RenderHint hint, bool on = true)
+- `[00]` setRenderHints(QPainter::RenderHints hints, bool on = true)
 - `[00]` setTransform(const QTransform &transform, bool combine = false)
 - `[00]` setViewTransformEnabled(bool enable)
 - `[00]` setViewport(const QRect &rectangle)

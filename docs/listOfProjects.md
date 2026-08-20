@@ -199,3 +199,51 @@ classDiagram
 ```
 
 ![Method: QPainter::save](https://img.shields.io/badge/Method-QPainter%3A%3Asave-blue) ![Method: QPainter::restore](https://img.shields.io/badge/Method-QPainter%3A%3Arestore-blue) ![Method: QPainter::setPen](https://img.shields.io/badge/Method-QPainter%3A%3AsetPen-blue)
+
+---
+
+## qPainter_005
+- [qPainter_005](../qPainter_005)
+- **Brief**: Eliminating jagged pixelation by configuring the Painter with the `QPainter::Antialiasing` render hint.
+
+**Topics:**
+- Render Hints: [QPainter::setRenderHint()](https://doc.qt.io/qt-6.8/qpainter.html#setRenderHint) and [QPainter::Antialiasing](https://doc.qt.io/qt-6.8/qpainter.html#RenderHint-enum)
+
+**Key Takeaway: Buttery Smooth Vectors**
+- By default, Qt is optimized for raw performance and draws shapes using hard pixel edges (aliasing). For modern vector graphics (like TikZ diagrams), setting the `Antialiasing` flag is mandatory to activate sub-pixel color blending, resulting in smooth, professional curves and diagonal lines. This hint only affects screen/image rendering; it is completely ignored when rendering to pure vector devices like SVG or PDF, where the viewer handles smoothing.
+
+```mermaid
+classDiagram
+    QEvent <|-- QPaintEvent
+    
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        +width() const int
+        +height() const int
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +setRenderHint(hint: RenderHint, on: bool) void
+    }
+    
+    class RenderHint {
+        <<enumeration>>
+        Antialiasing
+        TextAntialiasing
+        SmoothPixmapTransform
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    QPainter ..> RenderHint : Uses
+```
+
+![Method: QPainter::setRenderHint](https://img.shields.io/badge/Method-QPainter%3A%3AsetRenderHint-blue)

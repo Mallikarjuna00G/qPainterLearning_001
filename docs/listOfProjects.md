@@ -137,3 +137,65 @@ classDiagram
 ```
 
 ![Method: QWidget::resizeEvent](https://img.shields.io/badge/Method-QWidget%3A%3AresizeEvent-blue) ![Method: QResizeEvent::size](https://img.shields.io/badge/Method-QResizeEvent%3A%3Asize-blue)
+
+---
+
+## Architectural Note: The Holy Trinity of Qt Painting
+Before we start modifying the state of our painter (changing colors and thickness), it is critical to understand the three core classes that allow Qt's graphics system to work identically across multiple platforms and formats:
+
+1. **`QPainter` (The Artist)**: This is the class you interact with (e.g., `painter.drawLine()`). It holds the current settings (pen color, font, brush) and tells the system *what* to draw.
+2. **`QPaintDevice` (The Canvas)**: This represents the physical surface you are drawing on. It is a 2D space with a width, height, and coordinate system. `QWidget`, `QPixmap`, `QImage`, and `QPdfWriter` all inherit from `QPaintDevice`.
+   - *When will we use this?* Currently, our `QWidget` acts as the canvas. In **Day 6 (Advanced Graphics & Off-Screen Rendering)**, we will dynamically swap the canvas to a `QImage` to export PNGs, and a `QPdfWriter` to export PDFs.
+3. **`QPaintEngine` (The Translator)**: This class is completely hidden from you. It sits between the Artist and the Canvas. If you draw on a `QWidget`, the internal engine translates your line into low-level OpenGL, Metal, or Direct2D commands. If you draw on a `QPdfWriter`, the PDF engine translates that exact same `drawLine()` command into a PDF vector string.
+   - *When will we use this?* **Never.** Application developers treat this as a black box. It is exclusively touched by internal Qt engineers porting the framework to new hardware.
+
+This separation of concerns is the secret sauce. It is why the exact same complex math from your TikZ engine can render perfectly to a 4K monitor, save to a PNG, or export to a PDF, without you having to write three different versions of your code!
+
+---
+
+## qPainter_004
+- [qPainter_004](../qPainter_004)
+- **Brief**: Managing the "Artist's" State Stack. Because `QPainter` is the only class in the Trinity that holds styling data, we must use `save()` and `restore()` to backup and reset its brain (Pens and Brushes) to prevent cross-contamination.
+
+**Topics:**
+- Push state: [QPainter::save()](https://doc.qt.io/qt-6.8/qpainter.html#save)
+- Pop state: [QPainter::restore()](https://doc.qt.io/qt-6.8/qpainter.html#restore)
+- Pen creation: [QPen](https://doc.qt.io/qt-6.8/qpen.html) and [QPainter::setPen()](https://doc.qt.io/qt-6.8/qpainter.html#setPen)
+
+**Key Takeaway: The Golden Bracket**
+- **State Isolation**: When drawing complex, modular components (like nodes in a graph), it is critical that one component doesn't leak its styling (like a thick red outline) onto the next component. Wrapping your styling modifications in a `painter.save()` and `painter.restore()` bracket guarantees that the painter's state resets to exactly how you found it.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        +width() const int
+        +height() const int
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +save() void
+        +restore() void
+        +setPen(pen: QPen) void
+    }
+    
+    class QPen {
+        +QPen(color: QColor)
+        +setWidth(width: int) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPen : Instantiates
+    QPainter ..> QPen : Manages State
+```
+
+![Method: QPainter::save](https://img.shields.io/badge/Method-QPainter%3A%3Asave-blue) ![Method: QPainter::restore](https://img.shields.io/badge/Method-QPainter%3A%3Arestore-blue) ![Method: QPainter::setPen](https://img.shields.io/badge/Method-QPainter%3A%3AsetPen-blue)

@@ -149,9 +149,9 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` paintEngine() const
 - `[00]` pen() const
 - `[00]` resetTransform()
-- `[00]` restore()
+- `[01]` restore()
 - `[00]` rotate(qreal angle)
-- `[00]` save()
+- `[01]` save()
 - `[00]` scale(qreal sx, qreal sy)
 - `[00]` setBackground(const QBrush &brush)
 - `[00]` setBackgroundMode(Qt::BGMode mode)
@@ -172,7 +172,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` setOpacity(qreal opacity)
 - `[00]` setPen(Qt::PenStyle style)
 - `[00]` setPen(const QColor &color)
-- `[00]` setPen(const QPen &pen)
+- `[01]` setPen(const QPen &pen)
 - `[00]` setRenderHint(
 - `[00]` setRenderHints(
 - `[00]` setTransform(const QTransform &transform, bool combine = false)

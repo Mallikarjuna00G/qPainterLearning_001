@@ -347,8 +347,15 @@ classDiagram
         +QRectF(left: qreal, top: qreal, width: qreal, height: qreal)
     }
     
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
     class CanvasWidget {
-        #paintEvent(event: QPaintEvent*) void
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
     }
     
     CanvasWidget ..> QPainter : Instantiates
@@ -363,3 +370,75 @@ classDiagram
 ```
 
 ![Method: QPainter::drawLine](https://img.shields.io/badge/Method-QPainter%3A%3AdrawLine-blue) ![Method: QPainter::drawRect](https://img.shields.io/badge/Method-QPainter%3A%3AdrawRect-blue)
+
+---
+
+## qPainter_008
+- [qPainter_008](../qPainter_008)
+- **Brief**: High-performance batch drawing of points and lines.
+
+**Topics:**
+- Batch Primitives: [QPainter::drawPoints()](https://doc.qt.io/qt-6.8/qpainter.html#drawPoints), [QPainter::drawLines()](https://doc.qt.io/qt-6.8/qpainter.html#drawLines)
+- Containers: `QList<T>`, C-Style Arrays
+
+**Key Takeaway: Graphics Pipeline Efficiency**
+- Calling `drawPoint()` or `drawLine()` thousands of times in a loop forces the graphics engine to context-switch constantly. By packing all your geometric primitives into a single array (or `QList`) and passing it to the batch `drawPoints()` or `drawLines()` overloads, the GPU (or underlying raster engine) processes the entire batch in a single highly optimized pass. This is critical for drawing large grids, complex TikZ nodes, or dense scatter plots.
+
+```mermaid
+classDiagram
+    class QPainter {
+        +drawPoints(points: const QPointF*, pointCount: int) void
+        +drawLines(lines: QList~QLineF~) void
+        +setPen(pen: QPen) void
+    }
+    
+    class QPen {
+        +QPen(color: Qt::GlobalColor, width: int)
+    }
+    
+    class QPointF {
+        +QPointF(xpos: qreal, ypos: qreal)
+    }
+    
+    class QLineF {
+        +QLineF(x1: qreal, y1: qreal, x2: qreal, y2: qreal)
+    }
+    
+    class `QList~QLineF~` {
+        +append(value: QLineF) void
+    }
+    
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class GlobalHelpers {
+        <<free functions>>
+        +batchDrawPoints(painter: QPainter&) void
+        +batchDrawLines(painter: QPainter&) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> GlobalHelpers : Calls
+    
+    GlobalHelpers ..> QPainter : Receives
+    GlobalHelpers ..> QPointF : Instantiates (Array)
+    GlobalHelpers ..> `QList~QLineF~` : Instantiates
+    GlobalHelpers ..> QLineF : Instantiates
+    GlobalHelpers ..> QPen : Instantiates
+    
+    `QList~QLineF~` *-- QLineF : Contains
+    
+    QPainter ..> QPointF : Receives (Array)
+    QPainter ..> `QList~QLineF~` : Receives
+    QPainter ..> QPen : Receives
+```
+
+![Method: QPainter::drawPoints](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPoints-blue) ![Method: QPainter::drawLines](https://img.shields.io/badge/Method-QPainter%3A%3AdrawLines-blue)

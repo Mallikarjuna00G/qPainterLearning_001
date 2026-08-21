@@ -568,3 +568,63 @@ classDiagram
 ```
 
 ![Method: QPainter::drawEllipse](https://img.shields.io/badge/Method-QPainter%3A%3AdrawEllipse-blue) ![Method: QPainter::drawArc](https://img.shields.io/badge/Method-QPainter%3A%3AdrawArc-blue) ![Method: QPainter::drawPie](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPie-blue) ![Method: QPainter::drawChord](https://img.shields.io/badge/Method-QPainter%3A%3AdrawChord-blue)
+
+---
+
+## qPainter_012
+- [qPainter_012](../qPainter_012)
+- **Brief**: Drawing standard rectangles, batched rectangle lists, and dynamically scaling rounded rectangles.
+
+**Topics:**
+- Drawing Primitives: [QPainter::drawRect()](https://doc.qt.io/qt-6.8/qpainter.html#drawRect), [QPainter::drawRects()](https://doc.qt.io/qt-6.8/qpainter.html#drawRects), [QPainter::drawRoundedRect()](https://doc.qt.io/qt-6.8/qpainter.html#drawRoundedRect)
+
+**Key Takeaway: Batch Rendering and Dynamic Radii**
+- Passing a `QList<QRectF>` into `drawRects()` allows Qt to batch-render massive grids or tilemaps with a single draw call, bypassing the heavy overhead of iterating `drawRect()` in a native C++ loop.
+- `drawRoundedRect()` is incredibly flexible thanks to the `Qt::SizeMode` enum. `Qt::AbsoluteSize` enforces exact pixel curves (e.g. `15.0`), ensuring UI borders don't stretch irregularly when a widget resizes. `Qt::RelativeSize` (measured $0.0-100.0$) creates fluid borders that scale dynamically with the aspect ratio, making it effortless to generate pill shapes or dynamic circular avatars.
+
+```mermaid
+classDiagram
+    class QPainter {
+        +drawRect(rect: QRectF) void
+        +drawRects(rectangles: QList~QRectF~) void
+        +drawRoundedRect(rect: QRectF, xRadius: qreal, yRadius: qreal, mode: Qt::SizeMode) void
+    }
+    
+    class QRectF {
+        +QRectF(left: qreal, top: qreal, width: qreal, height: qreal)
+    }
+    
+    class Qt {
+        <<namespace>>
+    }
+    
+    class SizeMode {
+        <<enumeration>>
+        AbsoluteSize
+        RelativeSize
+    }
+    
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    Qt *-- SizeMode : contains
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QRectF : Instantiates
+    CanvasWidget ..> SizeMode : Uses
+    
+    QPainter ..> QRectF : Receives
+    QPainter ..> SizeMode : Receives
+```
+
+![Method: QPainter::drawRect](https://img.shields.io/badge/Method-QPainter%3A%3AdrawRect-blue) ![Method: QPainter::drawRects](https://img.shields.io/badge/Method-QPainter%3A%3AdrawRects-blue) ![Method: QPainter::drawRoundedRect](https://img.shields.io/badge/Method-QPainter%3A%3AdrawRoundedRect-blue)

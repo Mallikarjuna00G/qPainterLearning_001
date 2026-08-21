@@ -484,3 +484,87 @@ classDiagram
 ```
 
 ![Method: QPainter::fillRect](https://img.shields.io/badge/Method-QPainter%3A%3AfillRect-blue) ![Method: QPainter::eraseRect](https://img.shields.io/badge/Method-QPainter%3A%3AeraseRect-blue)
+
+---
+
+## qPainter_010
+- [qPainter_010](../qPainter_010)
+- **Brief**: Drawing curved shapes using bounding boxes and 1/16th degree integer angles.
+
+**Topics:**
+- Drawing Primitives: [QPainter::drawEllipse()](https://doc.qt.io/qt-6.8/qpainter.html#drawEllipse), [QPainter::drawArc()](https://doc.qt.io/qt-6.8/qpainter.html#drawArc), [QPainter::drawPie()](https://doc.qt.io/qt-6.8/qpainter.html#drawPie), [QPainter::drawChord()](https://doc.qt.io/qt-6.8/qpainter.html#drawChord)
+
+**Key Takeaway: The Bounding Box Architecture**
+- Almost all GUI rendering engines (including Qt) define curves by their enclosing `QRectF` rather than a mathematical center point and radius. This allows the GPU/Rasterizer to instantly calculate clipping boundaries and determine exactly which screen pixels need to be evaluated, maximizing graphics performance.
+- For partial curves (Arcs, Pies, Chords), angles are provided as integers representing `1/16ths of a degree`. This legacy design decision (inherited from X11) provided sub-degree precision ($0.0625^\circ$) without the severe performance penalty of using floating-point math on 1990s hardware.
+
+```mermaid
+classDiagram
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +SixteenthsOfADegree : int$
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +drawEllipse(rectangle: QRectF) void
+        +drawArc(rectangle: QRectF, startAngle: int, spanAngle: int) void
+        +drawPie(rectangle: QRectF, startAngle: int, spanAngle: int) void
+        +drawChord(rectangle: QRectF, startAngle: int, spanAngle: int) void
+    }
+    
+    class QRectF {
+        +QRectF(left: qreal, top: qreal, width: qreal, height: qreal)
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QRectF : Instantiates
+    
+    QPainter ..> QRectF : Receives
+```
+
+![Method: QPainter::drawEllipse](https://img.shields.io/badge/Method-QPainter%3A%3AdrawEllipse-blue) ![Method: QPainter::drawArc](https://img.shields.io/badge/Method-QPainter%3A%3AdrawArc-blue) ![Method: QPainter::drawPie](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPie-blue) ![Method: QPainter::drawChord](https://img.shields.io/badge/Method-QPainter%3A%3AdrawChord-blue)
+
+---
+
+## qPainter_011
+- [qPainter_011](../qPainter_011)
+- **Brief**: Building an intuitive math abstraction layer (TikZ-style API) over Qt's bounding box requirements.
+
+**Topics:**
+- Architectural Patterns: Inline Helper Functions, Stateless Functional Wrappers, Overload Resolution.
+
+**Key Takeaway: The Stateless Abstraction Pattern**
+- By creating `inline` helper methods within `canvaswidget.hpp`, we successfully decoupled mathematical intent (centers and radii) from Qt's rendering requirements (bounding boxes and $1/16^{\text{th}}$ degrees) without sacrificing any CPU performance or introducing heavy stateful wrapper classes. 
+- The design allows the user to write clean `paintEvent` code (`drawPieIntuitive(...)`) while ensuring that the "Highlander Rule" of Qt rendering is respected (only one `QPainter` active per widget, passed dynamically by reference).
+
+```mermaid
+classDiagram
+    QWidget <|-- CanvasWidget
+    
+    class CanvasWidget {
+        +SixteenthsOfADegree : int$
+        #paintEvent(event: QPaintEvent*) override void
+        +determineBoundingBox(center: QPointF, radius: qreal) QRectF
+        +drawArcIntuitive(painter: QPainter&, center: QPointF, ...) QRectF
+        +drawChordIntuitive(painter: QPainter&, center: QPointF, ...) QRectF
+        +drawPieIntuitive(painter: QPainter&, center: QPointF, ...) QRectF
+    }
+    
+    class QPainter {
+        +drawEllipse(center: QPointF, rx: qreal, ry: qreal) void
+        +drawArc(rectangle: QRectF, startAngle: int, spanAngle: int) void
+        +drawPie(rectangle: QRectF, startAngle: int, spanAngle: int) void
+        +drawChord(rectangle: QRectF, startAngle: int, spanAngle: int) void
+    }
+    
+    CanvasWidget ..> QPainter : Passes by Reference
+```
+
+![Method: QPainter::drawEllipse](https://img.shields.io/badge/Method-QPainter%3A%3AdrawEllipse-blue) ![Method: QPainter::drawArc](https://img.shields.io/badge/Method-QPainter%3A%3AdrawArc-blue) ![Method: QPainter::drawPie](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPie-blue) ![Method: QPainter::drawChord](https://img.shields.io/badge/Method-QPainter%3A%3AdrawChord-blue)

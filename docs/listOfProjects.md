@@ -314,3 +314,52 @@ classDiagram
 ```
 
 ![Method: QPainter::setFont](https://img.shields.io/badge/Method-QPainter%3A%3AsetFont-blue) ![Method: QPainter::font](https://img.shields.io/badge/Method-QPainter%3A%3Afont-blue) ![Method: QPainter::fontInfo](https://img.shields.io/badge/Method-QPainter%3A%3AfontInfo-blue) ![Method: QPainter::fontMetrics](https://img.shields.io/badge/Method-QPainter%3A%3AfontMetrics-blue)
+
+---
+
+## qPainter_007
+- [qPainter_007](../qPainter_007)
+- **Brief**: Introduction to sub-pixel coordinate precision for smooth vector geometries.
+
+**Topics:**
+- Floating-Point Primitives: [QPointF](https://doc.qt.io/qt-6.8/qpointf.html), [QLineF](https://doc.qt.io/qt-6.8/qlinef.html), [QRectF](https://doc.qt.io/qt-6.8/qrectf.html)
+- `QPainter` drawing overloads: [QPainter::drawLine(const QLineF&)](https://doc.qt.io/qt-6.8/qpainter.html#drawLine), [QPainter::drawRect(const QRectF&)](https://doc.qt.io/qt-6.8/qpainter.html#drawRect)
+
+**Key Takeaway: Integer Truncation vs. Mathematical Precision**
+- When drawing procedurally (especially intersections or angled lines), coordinates are rarely perfect integers. Standard integer geometry classes (`QPoint`, `QRect`) implicitly truncate decimal values (e.g., `50.75` becomes `50`). This causes shapes to geometrically "snap" to the pixel grid, destroying mathematical accuracy and sub-pixel antialiasing. We must habitually use floating-point geometry (`*F` suffix) to feed exact decimal coordinates to `QPainter`.
+
+```mermaid
+classDiagram
+    class QPainter {
+        +drawLine(line: QLineF) void
+        +drawRect(rect: QRectF) void
+    }
+    
+    class QPointF {
+        +QPointF(xpos: qreal, ypos: qreal)
+    }
+    
+    class QLineF {
+        +QLineF(pt1: QPointF, pt2: QPointF)
+    }
+    
+    class QRectF {
+        +QRectF(left: qreal, top: qreal, width: qreal, height: qreal)
+    }
+    
+    class CanvasWidget {
+        #paintEvent(event: QPaintEvent*) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPointF : Instantiates
+    CanvasWidget ..> QLineF : Instantiates
+    CanvasWidget ..> QRectF : Instantiates
+    
+    QLineF ..> QPointF : Constructs with
+    
+    QPainter ..> QLineF : Receives
+    QPainter ..> QRectF : Receives
+```
+
+![Method: QPainter::drawLine](https://img.shields.io/badge/Method-QPainter%3A%3AdrawLine-blue) ![Method: QPainter::drawRect](https://img.shields.io/badge/Method-QPainter%3A%3AdrawRect-blue)

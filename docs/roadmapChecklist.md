@@ -19,7 +19,7 @@ This document serves as the master tracking sheet and context anchor to ensure w
   - [ ] Layout Direction: Control text layout flow using [QPainter::setLayoutDirection()](https://doc.qt.io/qt-6.8/qpainter.html#setLayoutDirection) and [QPainter::layoutDirection()](https://doc.qt.io/qt-6.8/qpainter.html#layoutDirection)
 
 - [ ] **Day 2: Pens, Brushes, Gradients & Drawing Primitives**
-  - [ ] Coordinate precision: Test integer vs floating-point primitives (`QPoint` vs `QPointF`, `QLine` vs `QLineF`, `QRect` vs `QRectF`, `QPolygon` vs `QPolygonF`)
+  - [x] Coordinate precision: Test integer vs floating-point primitives (`QPoint` vs `QPointF`, `QLine` vs `QLineF`, `QRect` vs `QRectF`, `QPolygon` vs `QPolygonF`)
   - [ ] Points & Lines: Draw primitives using [QPainter::drawPoint()](https://doc.qt.io/qt-6.8/qpainter.html#drawPoint), [QPainter::drawPoints()](https://doc.qt.io/qt-6.8/qpainter.html#drawPoints), [QPainter::drawLine()](https://doc.qt.io/qt-6.8/qpainter.html#drawLine), and [QPainter::drawLines()](https://doc.qt.io/qt-6.8/qpainter.html#drawLines)
   - [ ] Rectangles: Draw outlines and shapes using [QPainter::drawRect()](https://doc.qt.io/qt-6.8/qpainter.html#drawRect), [QPainter::drawRects()](https://doc.qt.io/qt-6.8/qpainter.html#drawRects), and [QPainter::drawRoundedRect()](https://doc.qt.io/qt-6.8/qpainter.html#drawRoundedRect)
   - [ ] Fills & Erasing: Perform solid fills with [QPainter::fillRect()](https://doc.qt.io/qt-6.8/qpainter.html#fillRect) and clear areas with [QPainter::eraseRect()](https://doc.qt.io/qt-6.8/qpainter.html#eraseRect)

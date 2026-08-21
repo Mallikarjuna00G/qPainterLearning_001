@@ -247,3 +247,70 @@ classDiagram
 ```
 
 ![Method: QPainter::setRenderHint](https://img.shields.io/badge/Method-QPainter%3A%3AsetRenderHint-blue)
+
+---
+
+## qPainter_006
+- [qPainter_006](../qPainter_006)
+- **Brief**: Managing fonts and calculating pixel-perfect text boundaries using `QFontMetrics`.
+
+**Topics:**
+- Fonts: [QFont](https://doc.qt.io/qt-6.8/qfont.html), [QPainter::setFont()](https://doc.qt.io/qt-6.8/qpainter.html#setFont), and [QPainter::font()](https://doc.qt.io/qt-6.8/qpainter.html#font)
+- Metrics & Info: [QFontMetrics](https://doc.qt.io/qt-6.8/qfontmetrics.html), [QPainter::fontMetrics()](https://doc.qt.io/qt-6.8/qpainter.html#fontMetrics), [QFontInfo](https://doc.qt.io/qt-6.8/qfontinfo.html), and [QPainter::fontInfo()](https://doc.qt.io/qt-6.8/qpainter.html#fontInfo)
+
+**Key Takeaway: The Text Baseline and Font Metrics**
+- When drawing text, the Y-coordinate provided to `drawText()` is not the geometric top of the string, but the **baseline** (the invisible line that letters sit on). To perfectly center text inside a shape (like a node), you must use `QFontMetrics` to measure the exact `horizontalAdvance()` and `height()` of the string in the active font. You calculate the geometric top-left corner of the shape, and then add `QFontMetrics::ascent()` to the Y-coordinate to correctly position the text's baseline.
+- **Font Abstraction**: When you request a `QFont`, the operating system might substitute it with a similar fallback font if it's missing. While `QPainter::font()` returns what you asked for, `QPainter::fontInfo()` reveals the *actual* font Qt ended up rendering on the screen.
+
+```mermaid
+classDiagram
+    QEvent <|-- QPaintEvent
+    
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        +width() const int
+        +height() const int
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +setFont(font: QFont) void
+        +font() QFont
+        +fontInfo() QFontInfo
+        +fontMetrics() QFontMetrics
+        +drawText(x: int, y: int, text: QString) void
+    }
+    
+    class QFont {
+        +QFont(family: QString, pointSize: int, weight: int)
+        +family() QString
+    }
+    
+    class QFontInfo {
+        +family() QString
+    }
+    
+    class QFontMetrics {
+        +horizontalAdvance(text: QString) int
+        +height() int
+        +ascent() int
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QFont : Instantiates
+    CanvasWidget ..> QFontMetrics : Uses
+    CanvasWidget ..> QFontInfo : Uses
+    QPainter ..> QFont : Manages State
+    QPainter ..> QFontInfo : Creates / Returns
+    QPainter ..> QFontMetrics : Creates / Returns
+```
+
+![Method: QPainter::setFont](https://img.shields.io/badge/Method-QPainter%3A%3AsetFont-blue) ![Method: QPainter::font](https://img.shields.io/badge/Method-QPainter%3A%3Afont-blue) ![Method: QPainter::fontInfo](https://img.shields.io/badge/Method-QPainter%3A%3AfontInfo-blue) ![Method: QPainter::fontMetrics](https://img.shields.io/badge/Method-QPainter%3A%3AfontMetrics-blue)

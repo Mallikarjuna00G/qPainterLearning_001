@@ -139,9 +139,9 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` fillRect(int x, int y, int width, int height, Qt::GlobalColor color)
 - `[00]` fillRect(int x, int y, int width, int height, const QBrush &brush)
 - `[00]` fillRect(int x, int y, int width, int height, const QColor &color)
-- `[00]` font() const
-- `[00]` fontInfo() const
-- `[00]` fontMetrics() const
+- `[01]` font() const
+- `[01]` fontInfo() const
+- `[01]` fontMetrics() const
 - `[00]` hasClipping() const
 - `[01]` isActive() const
 - `[00]` layoutDirection() const
@@ -167,7 +167,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` setClipRegion(const QRegion &region, Qt::ClipOperation operation = Qt::ReplaceClip)
 - `[00]` setClipping(bool enable)
 - `[00]` setCompositionMode(
-- `[00]` setFont(const QFont &font)
+- `[01]` setFont(const QFont &font)
 - `[00]` setLayoutDirection(Qt::LayoutDirection direction)
 - `[00]` setOpacity(qreal opacity)
 - `[00]` setPen(Qt::PenStyle style)

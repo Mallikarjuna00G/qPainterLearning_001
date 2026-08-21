@@ -440,5 +440,47 @@ classDiagram
     QPainter ..> `QList~QLineF~` : Receives
     QPainter ..> QPen : Receives
 ```
-
 ![Method: QPainter::drawPoints](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPoints-blue) ![Method: QPainter::drawLines](https://img.shields.io/badge/Method-QPainter%3A%3AdrawLines-blue)
+
+---
+
+## qPainter_009
+- [qPainter_009](../qPainter_009)
+- **Brief**: Fast solid fills and geometric erasing.
+
+**Topics:**
+- Direct Manipulation: [QPainter::fillRect()](https://doc.qt.io/qt-6.8/qpainter.html#fillRect), [QPainter::eraseRect()](https://doc.qt.io/qt-6.8/qpainter.html#eraseRect)
+
+**Key Takeaway: Direct Screen Painting**
+- Unlike standard `drawRect()` which strokes a path using the current `QPen` and fills it using the current `QBrush`, `fillRect()` is a highly optimized fast-path that ignores the pen/brush and blasts a raw color (or gradient) directly into the rectangle bounds. 
+- `eraseRect()` is mathematically identical to drawing a rectangle filled with the widget's default background color (`window()` color), effectively punching a hole through previously rendered layers. This is significantly cheaper computationally than using complex clipping paths to mask out regions.
+
+```mermaid
+classDiagram
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class QPainter {
+        +fillRect(rectangle: QRectF, color: Qt::GlobalColor) void
+        +eraseRect(rectangle: QRectF) void
+    }
+    
+    class QRectF {
+        +QRectF(left: qreal, top: qreal, width: qreal, height: qreal)
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QRectF : Instantiates
+    
+    QPainter ..> QRectF : Receives
+```
+
+![Method: QPainter::fillRect](https://img.shields.io/badge/Method-QPainter%3A%3AfillRect-blue) ![Method: QPainter::eraseRect](https://img.shields.io/badge/Method-QPainter%3A%3AeraseRect-blue)

@@ -628,3 +628,67 @@ classDiagram
 ```
 
 ![Method: QPainter::drawRect](https://img.shields.io/badge/Method-QPainter%3A%3AdrawRect-blue) ![Method: QPainter::drawRects](https://img.shields.io/badge/Method-QPainter%3A%3AdrawRects-blue) ![Method: QPainter::drawRoundedRect](https://img.shields.io/badge/Method-QPainter%3A%3AdrawRoundedRect-blue)
+
+---
+
+## qPainter_013
+- [qPainter_013](../qPainter_013)
+- **Brief**: Exploring complex vector paths by comparing open Polylines, closed Polygons, and highly optimized Convex Polygons.
+
+**Topics:**
+- Vector Paths: [QPolygonF](https://doc.qt.io/qt-6.8/qpolygonf.html), [QPainter::drawPolyline()](https://doc.qt.io/qt-6.8/qpainter.html#drawPolyline), [QPainter::drawPolygon()](https://doc.qt.io/qt-6.8/qpainter.html#drawPolygon), [QPainter::drawConvexPolygon()](https://doc.qt.io/qt-6.8/qpainter.html#drawConvexPolygon)
+
+**Key Takeaway: The Fill Rule of Open vs. Closed Paths**
+- **`drawPolyline`**: Strictly defines an open, continuous stroke. Because it has no "inside", it completely ignores the active `QBrush` and only renders the `QPen`.
+- **`drawPolygon`**: Defines a closed shape by automatically connecting the final point back to the first point. It fully respects the active `QBrush` to fill its interior.
+
+**Key Takeaway: The Convex Optimization**
+- Mathematical Convexity: A convex shape (like a Triangle or Hexagon) has no internal angles greater than 180 degrees (i.e., no "dents").
+- Performance: Because convex shapes are mathematically simple, the rasterization engine can use a significantly faster algorithm to fill them. By explicitly calling `drawConvexPolygon()`, you bypass the heavy mathematics required to fill complex, self-intersecting polygons (like a 5-pointed star). *Warning: Passing a non-convex shape to this method results in visual corruption.*
+
+```mermaid
+classDiagram
+    class QPainter {
+        +drawPolyline(points: QPolygonF) void
+        +drawPolygon(points: QPolygonF) void
+        +drawConvexPolygon(points: QPolygonF) void
+        +setBrush(brush: QBrush) void
+    }
+    
+    class QPolygonF {
+        +QPolygonF(points: std::initializer_list~QPointF~)
+    }
+    
+    class QPointF {
+        +QPointF(xpos: qreal, ypos: qreal)
+    }
+    
+    class QBrush {
+        +QBrush(color: Qt::GlobalColor)
+    }
+    
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPolygonF : Instantiates
+    CanvasWidget ..> QPointF : Instantiates
+    CanvasWidget ..> QBrush : Instantiates
+    
+    QPolygonF *-- QPointF : Contains
+    
+    QPainter ..> QPolygonF : Receives
+    QPainter ..> QBrush : Receives
+```
+
+![Method: QPainter::drawPolyline](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPolyline-blue) ![Method: QPainter::drawPolygon](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPolygon-blue) ![Method: QPainter::drawConvexPolygon](https://img.shields.io/badge/Method-QPainter%3A%3AdrawConvexPolygon-blue)

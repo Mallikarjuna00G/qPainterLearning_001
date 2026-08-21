@@ -692,3 +692,68 @@ classDiagram
 ```
 
 ![Method: QPainter::drawPolyline](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPolyline-blue) ![Method: QPainter::drawPolygon](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPolygon-blue) ![Method: QPainter::drawConvexPolygon](https://img.shields.io/badge/Method-QPainter%3A%3AdrawConvexPolygon-blue)
+
+---
+
+## qPainter_014
+- [qPainter_014](../qPainter_014)
+- **Brief**: Managing text alignment for localization using `QPainter::setLayoutDirection()`.
+
+**Topics:**
+- Global State: [QPainter::setLayoutDirection()](https://doc.qt.io/qt-6.8/qpainter.html#setLayoutDirection), [Qt::LayoutDirection](https://doc.qt.io/qt-6.8/qt.html#LayoutDirection-enum)
+
+**Key Takeaway: Alignment Mirroring**
+- When drawing text via `QPainter::drawText(QRect, int flags, QString)` using standard alignment flags (e.g. `Qt::AlignLeft`), changing the layout direction to `Qt::RightToLeft` automatically "mirrors" the alignment. `Qt::AlignLeft` visually behaves like `Qt::AlignRight`.
+- This is a critical feature for building UIs that support RTL languages (like Arabic or Hebrew) because it prevents you from needing to manually rewrite all of your layout logic; Qt simply inverts the horizontal text flow automatically.
+- *Developer Discovery*: If you bypass the standard alignment flags and use the `QTextOption` overload of `drawText` without explicitly configuring it for RTL, the text will ignore the painter's Layout Direction and fall back to LTR!
+
+```mermaid
+classDiagram
+    class QPainter {
+        +setLayoutDirection(direction: Qt::LayoutDirection) void
+        +drawText(rectangle: QRectF, flags: int, text: QString) void
+        +drawText(rectangle: QRectF, text: QString, option: QTextOption) void
+    }
+    
+    class Qt {
+        <<namespace>>
+    }
+    
+    class LayoutDirection {
+        <<enumeration>>
+        LeftToRight
+        RightToLeft
+        LayoutDirectionAuto
+    }
+    
+    class AlignmentFlag {
+        <<enumeration>>
+        AlignLeft
+        AlignRight
+        AlignVCenter
+    }
+    
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    Qt *-- LayoutDirection : contains
+    Qt *-- AlignmentFlag : contains
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> LayoutDirection : Uses
+    CanvasWidget ..> AlignmentFlag : Uses
+    
+    QPainter ..> LayoutDirection : Receives
+```
+
+![Method: QPainter::setLayoutDirection](https://img.shields.io/badge/Method-QPainter%3A%3AsetLayoutDirection-blue)

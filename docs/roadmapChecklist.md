@@ -9,14 +9,14 @@ This document serves as the master tracking sheet and context anchor to ensure w
 
 ---
 
-- ⏳ **Day 1: Paint Pipeline, State Stack & Basic Settings**
+- ✅ **Day 1: Paint Pipeline, State Stack & Basic Settings**
   - ✅ Widget paint lifecycle: Implement [QWidget::paintEvent(QPaintEvent*)](https://doc.qt.io/qt-6.8/qwidget.html#paintEvent) and [QWidget::resizeEvent(QResizeEvent*)](https://doc.qt.io/qt-6.8/qwidget.html#resizeEvent)
   - ✅ Initialize & manage painter: Use [QPainter::begin(QPaintDevice*)](https://doc.qt.io/qt-6.8/qpainter.html#begin), [QPainter::end()](https://doc.qt.io/qt-6.8/qpainter.html#end), and verify with [QPainter::isActive()](https://doc.qt.io/qt-6.8/qpainter.html#isActive)
   - ✅ Understand paint architecture: Relationship between [QPainter](https://doc.qt.io/qt-6.8/qpainter.html), [QPaintDevice](https://doc.qt.io/qt-6.8/qpaintdevice.html), and [QPaintEngine](https://doc.qt.io/qt-6.8/qpaintengine.html)
   - ✅ State Stack isolation: Save and restore painter settings via [QPainter::save()](https://doc.qt.io/qt-6.8/qpainter.html#save) and [QPainter::restore()](https://doc.qt.io/qt-6.8/qpainter.html#restore)
   - ✅ Basic rendering hints: Enable [QPainter::Antialiasing](https://doc.qt.io/qt-6.8/qpainter.html#RenderHint-enum) and [QPainter::TextAntialiasing](https://doc.qt.io/qt-6.8/qpainter.html#RenderHint-enum) via [QPainter::setRenderHint()](https://doc.qt.io/qt-6.8/qpainter.html#setRenderHint) for smooth vector drawing from the start
   - ✅ Font management: Set and inspect active fonts using [QPainter::setFont()](https://doc.qt.io/qt-6.8/qpainter.html#setFont), [QPainter::font()](https://doc.qt.io/qt-6.8/qpainter.html#font), [QPainter::fontInfo()](https://doc.qt.io/qt-6.8/qpainter.html#fontInfo), and [QPainter::fontMetrics()](https://doc.qt.io/qt-6.8/qpainter.html#fontMetrics)
-  - ⏳ Layout Direction: Control text layout flow using [QPainter::setLayoutDirection()](https://doc.qt.io/qt-6.8/qpainter.html#setLayoutDirection) and [QPainter::layoutDirection()](https://doc.qt.io/qt-6.8/qpainter.html#layoutDirection)
+  - ✅ Layout Direction: Control text layout flow using [QPainter::setLayoutDirection()](https://doc.qt.io/qt-6.8/qpainter.html#setLayoutDirection) and [QPainter::layoutDirection()](https://doc.qt.io/qt-6.8/qpainter.html#layoutDirection)
 
 - ⏳ **Day 2: Pens, Brushes, Gradients & Drawing Primitives**
   - ✅ Coordinate precision: Test integer vs floating-point primitives (`QPoint` vs `QPointF`, `QLine` vs `QLineF`, `QRect` vs `QRectF`, `QPolygon` vs `QPolygonF`)

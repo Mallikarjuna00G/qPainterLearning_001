@@ -11,20 +11,36 @@ This document serves as the master tracking sheet and context anchor to ensure w
 
 - ✅ **Day 1: Paint Pipeline, State Stack & Basic Settings**
   - ✅ Widget paint lifecycle: Implement [QWidget::paintEvent(QPaintEvent*)](https://doc.qt.io/qt-6.8/qwidget.html#paintEvent) and [QWidget::resizeEvent(QResizeEvent*)](https://doc.qt.io/qt-6.8/qwidget.html#resizeEvent)
+    - [qPainter_001](../qPainter_001)
+    - [qPainter_002](../qPainter_002)
+    - [qPainter_003](../qPainter_003)
   - ✅ Initialize & manage painter: Use [QPainter::begin(QPaintDevice*)](https://doc.qt.io/qt-6.8/qpainter.html#begin), [QPainter::end()](https://doc.qt.io/qt-6.8/qpainter.html#end), and verify with [QPainter::isActive()](https://doc.qt.io/qt-6.8/qpainter.html#isActive)
+    - [qPainter_001](../qPainter_001)
   - ✅ Understand paint architecture: Relationship between [QPainter](https://doc.qt.io/qt-6.8/qpainter.html), [QPaintDevice](https://doc.qt.io/qt-6.8/qpaintdevice.html), and [QPaintEngine](https://doc.qt.io/qt-6.8/qpaintengine.html)
-  - ✅ State Stack isolation: Save and restore painter settings via [QPainter::save()](https://doc.qt.io/qt-6.8/qpainter.html#save) and [QPainter::restore()](https://doc.qt.io/qt-6.8/qpainter.html#restore)
+    - [listOfProjects.md (Architectural Note)](listOfProjects.md)
+  - ✅ State Stack isolation: Save and restore painter settings via [QPainter::save()](https://doc.doc.qt.io/qt-6.8/qpainter.html#save) and [QPainter::restore()](https://doc.qt.io/qt-6.8/qpainter.html#restore)
+    - [qPainter_004](../qPainter_004)
   - ✅ Basic rendering hints: Enable [QPainter::Antialiasing](https://doc.qt.io/qt-6.8/qpainter.html#RenderHint-enum) and [QPainter::TextAntialiasing](https://doc.qt.io/qt-6.8/qpainter.html#RenderHint-enum) via [QPainter::setRenderHint()](https://doc.qt.io/qt-6.8/qpainter.html#setRenderHint) for smooth vector drawing from the start
+    - [qPainter_005](../qPainter_005)
   - ✅ Font management: Set and inspect active fonts using [QPainter::setFont()](https://doc.qt.io/qt-6.8/qpainter.html#setFont), [QPainter::font()](https://doc.qt.io/qt-6.8/qpainter.html#font), [QPainter::fontInfo()](https://doc.qt.io/qt-6.8/qpainter.html#fontInfo), and [QPainter::fontMetrics()](https://doc.qt.io/qt-6.8/qpainter.html#fontMetrics)
+    - [qPainter_006](../qPainter_006)
   - ✅ Layout Direction: Control text layout flow using [QPainter::setLayoutDirection()](https://doc.qt.io/qt-6.8/qpainter.html#setLayoutDirection) and [QPainter::layoutDirection()](https://doc.qt.io/qt-6.8/qpainter.html#layoutDirection)
+    - [qPainter_014](../qPainter_014)
 
 - ⏳ **Day 2: Pens, Brushes, Gradients & Drawing Primitives**
   - ✅ Coordinate precision: Test integer vs floating-point primitives (`QPoint` vs `QPointF`, `QLine` vs `QLineF`, `QRect` vs `QRectF`, `QPolygon` vs `QPolygonF`)
+    - [qPainter_007](../qPainter_007)
   - ✅ Points & Lines: Draw primitives using [QPainter::drawPoint()](https://doc.qt.io/qt-6.8/qpainter.html#drawPoint), [QPainter::drawPoints()](https://doc.qt.io/qt-6.8/qpainter.html#drawPoints), [QPainter::drawLine()](https://doc.qt.io/qt-6.8/qpainter.html#drawLine), and [QPainter::drawLines()](https://doc.qt.io/qt-6.8/qpainter.html#drawLines)
-  - ✅ Rectangles: Draw outlines and shapes using [QPainter::drawRect()](https://doc.qt.io/qt-6.8/qpainter.html#drawRect), [QPainter::drawRects()](https://doc.qt.io/qt-6.8/qpainter.html#drawRects), and [QPainter::drawRoundedRect()](https://doc.qt.io/qt-6.8/qpainter.html#drawRoundedRect)
+    - [qPainter_008](../qPainter_008)
   - ✅ Fills & Erasing: Perform solid fills with [QPainter::fillRect()](https://doc.qt.io/qt-6.8/qpainter.html#fillRect) and clear areas with [QPainter::eraseRect()](https://doc.qt.io/qt-6.8/qpainter.html#eraseRect)
+    - [qPainter_009](../qPainter_009)
   - ✅ Curved shapes: Draw curves using [QPainter::drawEllipse()](https://doc.qt.io/qt-6.8/qpainter.html#drawEllipse), [QPainter::drawArc()](https://doc.qt.io/qt-6.8/qpainter.html#drawArc), [QPainter::drawPie()](https://doc.qt.io/qt-6.8/qpainter.html#drawPie), and [QPainter::drawChord()](https://doc.qt.io/qt-6.8/qpainter.html#drawChord)
+    - [qPainter_010](../qPainter_010)
+    - [qPainter_011](../qPainter_011)
+  - ✅ Rectangles: Draw outlines and shapes using [QPainter::drawRect()](https://doc.qt.io/qt-6.8/qpainter.html#drawRect), [QPainter::drawRects()](https://doc.qt.io/qt-6.8/qpainter.html#drawRects), and [QPainter::drawRoundedRect()](https://doc.qt.io/qt-6.8/qpainter.html#drawRoundedRect)
+    - [qPainter_012](../qPainter_012)
   - ✅ Polygons & Polylines: Draw multisided vector paths using [QPainter::drawPolygon()](https://doc.qt.io/qt-6.8/qpainter.html#drawPolygon), [QPainter::drawPolyline()](https://doc.qt.io/qt-6.8/qpainter.html#drawPolyline), and [QPainter::drawConvexPolygon()](https://doc.qt.io/qt-6.8/qpainter.html#drawConvexPolygon)
+    - [qPainter_013](../qPainter_013)
   - ⏳ Pen customization: Set pen width, caps ([Qt::FlatCap](https://doc.qt.io/qt-6.8/qt.html#PenCapStyle-enum), [Qt::SquareCap](https://doc.qt.io/qt-6.8/qt.html#PenCapStyle-enum), [Qt::RoundCap](https://doc.qt.io/qt-6.8/qt.html#PenCapStyle-enum)), joins ([Qt::MiterJoin](https://doc.qt.io/qt-6.8/qt.html#PenJoinStyle-enum), [Qt::BevelJoin](https://doc.qt.io/qt-6.8/qt.html#PenJoinStyle-enum), [Qt::RoundJoin](https://doc.qt.io/qt-6.8/qt.html#PenJoinStyle-enum)), and custom dash patterns using [QPen::setDashPattern()](https://doc.qt.io/qt-6.8/qpen.html#setDashPattern)
   - ⏳ Brush & Background options: Set [QPainter::setBrush()](https://doc.qt.io/qt-6.8/qpainter.html#setBrush), configure [QPainter::setBackgroundMode()](https://doc.qt.io/qt-6.8/qpainter.html#setBackgroundMode) ([Qt::OpaqueMode](https://doc.qt.io/qt-6.8/qt.html#BGMode-enum) vs [Qt::TransparentMode](https://doc.qt.io/qt-6.8/qt.html#BGMode-enum)), background colors using [QPainter::setBackground()](https://doc.qt.io/qt-6.8/qpainter.html#setBackground), and brush origin using [QPainter::setBrushOrigin()](https://doc.qt.io/qt-6.8/qpainter.html#setBrushOrigin)
   - ⏳ Gradient fills: Apply [QLinearGradient](https://doc.qt.io/qt-6.8/qlineargradient.html), [QRadialGradient](https://doc.qt.io/qt-6.8/qradialgradient.html), and [QConicalGradient](https://doc.qt.io/qt-6.8/qconicalgradient.html) to vector primitives

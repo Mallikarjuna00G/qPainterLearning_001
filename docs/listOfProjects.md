@@ -911,3 +911,88 @@ classDiagram
 ```
 
 ![Method: QPainter::setBrush](https://img.shields.io/badge/Method-QPainter%3A%3AsetBrush-blue) ![Method: QPainter::setBackgroundMode](https://img.shields.io/badge/Method-QPainter%3A%3AsetBackgroundMode-blue) ![Method: QPainter::setBackground](https://img.shields.io/badge/Method-QPainter%3A%3AsetBackground-blue) ![Method: QPainter::setBrushOrigin](https://img.shields.io/badge/Method-QPainter%3A%3AsetBrushOrigin-blue) ![Method: QPainter::drawText](https://img.shields.io/badge/Method-QPainter%3A%3AdrawText-blue)
+
+---
+
+## qPainter_017
+- [qPainter_017](../qPainter_017)
+- **Brief**: Mastering smooth vector color transitions across lines, circles, and cones using Qt's gradient classes and spread modes.
+
+**Topics:**
+- Linear Gradients: `QLinearGradient`
+- Radial Gradients: `QRadialGradient`
+- Conical Gradients: `QConicalGradient`
+- Gradient Spread Behaviors: `QGradient::PadSpread`, `QGradient::RepeatSpread`, `QGradient::ReflectSpread`
+
+**Key Takeaway: The Brush Pipeline**
+- Gradients in Qt are not independent painting operations. They are complex color patterns fed directly into a standard `QBrush`. Once a gradient is assigned to a brush, standard primitives like `drawRect` and `drawEllipse` will automatically paint using the gradient's interpolation mathematics.
+
+**Key Takeaway: Spread Modes**
+- If a shape is physically larger than the geometric bounding box defined by a `QLinearGradient` or `QRadialGradient`, the `setSpread()` property determines what happens to the remaining empty space. `PadSpread` (default) simply holds and stretches the final color value. `RepeatSpread` performs a harsh loop back to 0%. `ReflectSpread` bounces back and forth, smoothly interpolating forward and backward for seamless repeating textures.
+
+```mermaid
+classDiagram
+    class QPainter {
+        +setBrush(brush: QBrush) void
+        +drawRect(x: int, y: int, width: int, height: int) void
+        +drawEllipse(x: int, y: int, width: int, height: int) void
+    }
+    
+    class QBrush {
+        +QBrush(gradient: QGradient)
+    }
+    
+    class QGradient {
+        +setColorAt(position: qreal, color: QColor) void
+        +setSpread(spread: QGradient::Spread) void
+    }
+    
+    class QLinearGradient {
+        +QLinearGradient(x1: qreal, y1: qreal, x2: qreal, y2: qreal)
+    }
+    
+    class QRadialGradient {
+        +QRadialGradient(cx: qreal, cy: qreal, radius: qreal)
+    }
+    
+    class QConicalGradient {
+        +QConicalGradient(cx: qreal, cy: qreal, angle: qreal)
+    }
+    
+    class Spread {
+        <<enumeration>>
+        PadSpread
+        ReflectSpread
+        RepeatSpread
+    }
+    
+    QGradient <|-- QLinearGradient
+    QGradient <|-- QRadialGradient
+    QGradient <|-- QConicalGradient
+    
+    QGradient *-- Spread : contains
+    
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QLinearGradient : Instantiates
+    CanvasWidget ..> QRadialGradient : Instantiates
+    CanvasWidget ..> QConicalGradient : Instantiates
+    CanvasWidget ..> QBrush : Instantiates
+    
+    QPainter ..> QBrush : Receives
+    QBrush ..> QGradient : Receives
+```
+
+![Method: QPainter::setBrush](https://img.shields.io/badge/Method-QPainter%3A%3AsetBrush-blue) ![Method: QPainter::drawRect](https://img.shields.io/badge/Method-QPainter%3A%3AdrawRect-blue) ![Method: QPainter::drawEllipse](https://img.shields.io/badge/Method-QPainter%3A%3AdrawEllipse-blue) ![Method: QGradient::setColorAt](https://img.shields.io/badge/Method-QGradient%3A%3AsetColorAt-blue) ![Method: QGradient::setSpread](https://img.shields.io/badge/Method-QGradient%3A%3AsetSpread-blue)

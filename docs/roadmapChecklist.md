@@ -27,7 +27,7 @@ This document serves as the master tracking sheet and context anchor to ensure w
   - ✅ Layout Direction: Control text layout flow using [QPainter::setLayoutDirection()](https://doc.qt.io/qt-6.8/qpainter.html#setLayoutDirection) and [QPainter::layoutDirection()](https://doc.qt.io/qt-6.8/qpainter.html#layoutDirection)
     - [qPainter_014](../qPainter_014)
 
-- ⏳ **Day 2: Pens, Brushes, Gradients & Drawing Primitives**
+- ✅ **Day 2: Pens, Brushes, Gradients & Drawing Primitives**
   - ✅ Coordinate precision: Test integer vs floating-point primitives (`QPoint` vs `QPointF`, `QLine` vs `QLineF`, `QRect` vs `QRectF`, `QPolygon` vs `QPolygonF`)
     - [qPainter_007](../qPainter_007)
   - ✅ Points & Lines: Draw primitives using [QPainter::drawPoint()](https://doc.qt.io/qt-6.8/qpainter.html#drawPoint), [QPainter::drawPoints()](https://doc.qt.io/qt-6.8/qpainter.html#drawPoints), [QPainter::drawLine()](https://doc.qt.io/qt-6.8/qpainter.html#drawLine), and [QPainter::drawLines()](https://doc.qt.io/qt-6.8/qpainter.html#drawLines)
@@ -45,7 +45,8 @@ This document serves as the master tracking sheet and context anchor to ensure w
     - [qPainter_015](../qPainter_015)
   - ✅ Brush & Background options: Set [QPainter::setBrush()](https://doc.qt.io/qt-6.8/qpainter.html#setBrush), configure [QPainter::setBackgroundMode()](https://doc.qt.io/qt-6.8/qpainter.html#setBackgroundMode) ([Qt::OpaqueMode](https://doc.qt.io/qt-6.8/qt.html#BGMode-enum) vs [Qt::TransparentMode](https://doc.qt.io/qt-6.8/qt.html#BGMode-enum)), background colors using [QPainter::setBackground()](https://doc.qt.io/qt-6.8/qpainter.html#setBackground), and brush origin using [QPainter::setBrushOrigin()](https://doc.qt.io/qt-6.8/qpainter.html#setBrushOrigin)
     - [qPainter_016](../qPainter_016)
-  - ⏳ Gradient fills: Apply [QLinearGradient](https://doc.qt.io/qt-6.8/qlineargradient.html), [QRadialGradient](https://doc.qt.io/qt-6.8/qradialgradient.html), and [QConicalGradient](https://doc.qt.io/qt-6.8/qconicalgradient.html) to vector primitives
+  - ✅ Gradient fills: Apply [QLinearGradient](https://doc.qt.io/qt-6.8/qlineargradient.html), [QRadialGradient](https://doc.qt.io/qt-6.8/qradialgradient.html), and [QConicalGradient](https://doc.qt.io/qt-6.8/qconicalgradient.html) to vector primitives
+    - [qPainter_017](../qPainter_017)
 
 - ⏳ **Day 3: Coordinate Systems, Affine Transforms & Matrix Operations**
   - ⏳ Basic transformations: Apply translation using [QPainter::translate()](https://doc.qt.io/qt-6.8/qpainter.html#translate), scaling using [QPainter::scale()](https://doc.qt.io/qt-6.8/qpainter.html#scale), rotation using [QPainter::rotate()](https://doc.qt.io/qt-6.8/qpainter.html#rotate), and shearing using [QPainter::shear()](https://doc.qt.io/qt-6.8/qpainter.html#shear)

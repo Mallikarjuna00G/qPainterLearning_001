@@ -388,7 +388,7 @@ classDiagram
 classDiagram
     class QPainter {
         +drawPoints(points: const QPointF*, pointCount: int) void
-        +drawLines(lines: QList~QLineF~) void
+        +drawLines(lines: QList) void
         +setPen(pen: QPen) void
     }
     
@@ -404,7 +404,7 @@ classDiagram
         +QLineF(x1: qreal, y1: qreal, x2: qreal, y2: qreal)
     }
     
-    class `QList~QLineF~` {
+    class QList {
         +append(value: QLineF) void
     }
     
@@ -430,14 +430,14 @@ classDiagram
     
     GlobalHelpers ..> QPainter : Receives
     GlobalHelpers ..> QPointF : Instantiates (Array)
-    GlobalHelpers ..> `QList~QLineF~` : Instantiates
+    GlobalHelpers ..> QList : Instantiates
     GlobalHelpers ..> QLineF : Instantiates
     GlobalHelpers ..> QPen : Instantiates
     
-    `QList~QLineF~` *-- QLineF : Contains
+    QList *-- QLineF : Contains
     
     QPainter ..> QPointF : Receives (Array)
-    QPainter ..> `QList~QLineF~` : Receives
+    QPainter ..> QList : Receives
     QPainter ..> QPen : Receives
 ```
 ![Method: QPainter::drawPoints](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPoints-blue) ![Method: QPainter::drawLines](https://img.shields.io/badge/Method-QPainter%3A%3AdrawLines-blue)
@@ -586,7 +586,7 @@ classDiagram
 classDiagram
     class QPainter {
         +drawRect(rect: QRectF) void
-        +drawRects(rectangles: QList~QRectF~) void
+        +drawRects(rectangles: QList) void
         +drawRoundedRect(rect: QRectF, xRadius: qreal, yRadius: qreal, mode: Qt::SizeMode) void
     }
     
@@ -785,9 +785,9 @@ classDiagram
     
     class QPen {
         +setWidth(width: int) void
-        +setCapStyle(style: Qt::PenCapStyle) void
-        +setJoinStyle(style: Qt::PenJoinStyle) void
-        +setDashPattern(pattern: QList~qreal~) void
+        +setCapStyle(style: PenCapStyle) void
+        +setJoinStyle(style: PenJoinStyle) void
+        +setDashPattern(pattern: QList) void
     }
     
     class Qt {
@@ -857,7 +857,7 @@ classDiagram
 classDiagram
     class QPainter {
         +setBrush(brush: QBrush) void
-        +setBackgroundMode(mode: Qt::BGMode) void
+        +setBackgroundMode(mode: BGMode) void
         +setBackground(brush: QBrush) void
         +setBrushOrigin(x: int, y: int) void
         +drawRect(x: int, y: int, width: int, height: int) void
@@ -944,7 +944,7 @@ classDiagram
     
     class QGradient {
         +setColorAt(position: qreal, color: QColor) void
-        +setSpread(spread: QGradient::Spread) void
+        +setSpread(spread: Spread) void
     }
     
     class QLinearGradient {

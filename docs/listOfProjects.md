@@ -835,3 +835,79 @@ classDiagram
 ```
 
 ![Method: QPen::setWidth](https://img.shields.io/badge/Method-QPen%3A%3AsetWidth-blue) ![Method: QPen::setCapStyle](https://img.shields.io/badge/Method-QPen%3A%3AsetCapStyle-blue) ![Method: QPen::setJoinStyle](https://img.shields.io/badge/Method-QPen%3A%3AsetJoinStyle-blue) ![Method: QPen::setDashPattern](https://img.shields.io/badge/Method-QPen%3A%3AsetDashPattern-blue)
+
+---
+
+## qPainter_016
+- [qPainter_016](../qPainter_016)
+- **Brief**: Exploring `QBrush` patterns, manipulating transparent vs opaque background modes, and controlling the brush origin to anchor patterns to shapes rather than the window.
+
+**Topics:**
+- Brush Patterns: `Qt::CrossPattern`, `Qt::DiagCrossPattern`
+- Background Modes: `Qt::TransparentMode` (default) vs `Qt::OpaqueMode`
+- Brush Origin: `QPainter::setBrushOrigin()`
+
+**Key Takeaway: The "Opaque" Text Gotcha**
+- When `setBackgroundMode(Qt::OpaqueMode)` is active, it doesn't just fill the empty space in hatched brush patterns—it also draws a solid colored box behind all text rendered with `drawText()`. This is highly useful for making text readable over busy backgrounds, but can be a surprise if left active accidentally. Always use `save()` and `restore()`!
+
+**Key Takeaway: The Sliding Window Effect**
+- By default, brush patterns are universally anchored to `(0,0)` of the window. If you draw a shape, it acts like a sliding window revealing a static wallpaper behind it. To make a pattern "stick" to a shape as it moves across the screen, you must use `setBrushOrigin()` to anchor the texture's starting point to the shape's local coordinates.
+
+```mermaid
+classDiagram
+    class QPainter {
+        +setBrush(brush: QBrush) void
+        +setBackgroundMode(mode: Qt::BGMode) void
+        +setBackground(brush: QBrush) void
+        +setBrushOrigin(x: int, y: int) void
+        +drawRect(x: int, y: int, width: int, height: int) void
+        +drawText(x: int, y: int, text: QString) void
+    }
+    
+    class QBrush {
+        +QBrush(color: Qt::GlobalColor, style: Qt::BrushStyle)
+    }
+    
+    class Qt {
+        <<namespace>>
+    }
+    
+    class BrushStyle {
+        <<enumeration>>
+        SolidPattern
+        CrossPattern
+        DiagCrossPattern
+    }
+    
+    class BGMode {
+        <<enumeration>>
+        TransparentMode
+        OpaqueMode
+    }
+    
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    Qt *-- BrushStyle : contains
+    Qt *-- BGMode : contains
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QBrush : Instantiates
+    CanvasWidget ..> BrushStyle : Uses
+    CanvasWidget ..> BGMode : Uses
+    
+    QPainter ..> QBrush : Receives
+    QPainter ..> BGMode : Receives
+```
+
+![Method: QPainter::setBrush](https://img.shields.io/badge/Method-QPainter%3A%3AsetBrush-blue) ![Method: QPainter::setBackgroundMode](https://img.shields.io/badge/Method-QPainter%3A%3AsetBackgroundMode-blue) ![Method: QPainter::setBackground](https://img.shields.io/badge/Method-QPainter%3A%3AsetBackground-blue) ![Method: QPainter::setBrushOrigin](https://img.shields.io/badge/Method-QPainter%3A%3AsetBrushOrigin-blue) ![Method: QPainter::drawText](https://img.shields.io/badge/Method-QPainter%3A%3AdrawText-blue)

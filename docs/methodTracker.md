@@ -52,7 +52,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` drawLine(const QLineF &line)
 - `[00]` drawLine(const QPoint &p1, const QPoint &p2)
 - `[00]` drawLine(const QPointF &p1, const QPointF &p2)
-- `[03]` drawLine(int x1, int y1, int x2, int y2)
+- `[09]` drawLine(int x1, int y1, int x2, int y2)
 - `[00]` drawLines(const QLine *lines, int lineCount)
 - `[00]` drawLines(const QLineF *lines, int lineCount)
 - `[00]` drawLines(const QList<QLine> &lines)
@@ -94,7 +94,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` drawPolyline(const QPoint *points, int pointCount)
 - `[00]` drawPolyline(const QPointF *points, int pointCount)
 - `[00]` drawPolyline(const QPolygon &points)
-- `[01]` drawPolyline(const QPolygonF &points)
+- `[04]` drawPolyline(const QPolygonF &points)
 - `[00]` drawRect(const QRect &rectangle)
 - `[02]` drawRect(const QRectF &rectangle)
 - `[01]` drawRect(int x, int y, int width, int height)
@@ -149,9 +149,9 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` paintEngine() const
 - `[00]` pen() const
 - `[00]` resetTransform()
-- `[01]` restore()
+- `[02]` restore()
 - `[00]` rotate(qreal angle)
-- `[01]` save()
+- `[02]` save()
 - `[00]` scale(qreal sx, qreal sy)
 - `[00]` setBackground(const QBrush &brush)
 - `[00]` setBackgroundMode(Qt::BGMode mode)
@@ -172,7 +172,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` setOpacity(qreal opacity)
 - `[00]` setPen(Qt::PenStyle style)
 - `[00]` setPen(const QColor &color)
-- `[18]` setPen(const QPen &pen)
+- `[25]` setPen(const QPen &pen)
 - `[01]` setRenderHint(QPainter::RenderHint hint, bool on = true)
 - `[00]` setRenderHints(QPainter::RenderHints hints, bool on = true)
 - `[00]` setTransform(const QTransform &transform, bool combine = false)
@@ -189,7 +189,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` transform() const
 - `[00]` translate(const QPoint &offset)
 - `[00]` translate(const QPointF &offset)
-- `[00]` translate(qreal dx, qreal dy)
+- `[02]` translate(qreal dx, qreal dy)
 - `[00]` viewTransformEnabled() const
 - `[00]` viewport() const
 - `[00]` window() const

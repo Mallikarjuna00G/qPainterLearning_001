@@ -757,3 +757,81 @@ classDiagram
 ```
 
 ![Method: QPainter::setLayoutDirection](https://img.shields.io/badge/Method-QPainter%3A%3AsetLayoutDirection-blue)
+
+---
+
+## qPainter_015
+- [qPainter_015](../qPainter_015)
+- **Brief**: Deep dive into `QPen` styling including custom dash patterns, line caps, and corner joins.
+
+**Topics:**
+- Pen Caps: `Qt::FlatCap`, `Qt::SquareCap`, `Qt::RoundCap`
+- Pen Joins: `Qt::MiterJoin`, `Qt::BevelJoin`, `Qt::RoundJoin`
+- Dash Patterns: `QPen::setDashPattern()`
+
+**Key Takeaway: Cap Bleed**
+- A critical detail of `Qt::SquareCap` and `Qt::RoundCap` is that they extend *past* the mathematical start and end coordinates of the line by exactly half of the pen's width. If drawing thick lines near the edge of a clipping box or bounding rect, `Qt::FlatCap` is the only safe cap that remains strictly inside the geometric coordinates.
+
+**Key Takeaway: Custom Dashes**
+- Rather than relying on the standard `Qt::DashLine` or `Qt::DotLine`, you can feed `setDashPattern()` an exact sequence of multipliers (e.g. `[4.0, 2.0, 1.0, 2.0]` for solid, empty, solid, empty). These numbers are multiplied by the `QPen`'s width to determine the exact pixel length of each dash and gap, allowing you to perfectly recreate complex SVG strokes or Morse-code-style borders.
+
+```mermaid
+classDiagram
+    class QPainter {
+        +setPen(pen: QPen) void
+        +drawLine(x1: int, y1: int, x2: int, y2: int) void
+        +drawPolyline(points: QPolygonF) void
+    }
+    
+    class QPen {
+        +setWidth(width: int) void
+        +setCapStyle(style: Qt::PenCapStyle) void
+        +setJoinStyle(style: Qt::PenJoinStyle) void
+        +setDashPattern(pattern: QList~qreal~) void
+    }
+    
+    class Qt {
+        <<namespace>>
+    }
+    
+    class PenCapStyle {
+        <<enumeration>>
+        FlatCap
+        SquareCap
+        RoundCap
+    }
+    
+    class PenJoinStyle {
+        <<enumeration>>
+        MiterJoin
+        BevelJoin
+        RoundJoin
+    }
+    
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    Qt *-- PenCapStyle : contains
+    Qt *-- PenJoinStyle : contains
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPen : Instantiates
+    CanvasWidget ..> PenCapStyle : Uses
+    CanvasWidget ..> PenJoinStyle : Uses
+    
+    QPainter ..> QPen : Receives
+    QPen ..> PenCapStyle : Receives
+    QPen ..> PenJoinStyle : Receives
+```
+
+![Method: QPen::setWidth](https://img.shields.io/badge/Method-QPen%3A%3AsetWidth-blue) ![Method: QPen::setCapStyle](https://img.shields.io/badge/Method-QPen%3A%3AsetCapStyle-blue) ![Method: QPen::setJoinStyle](https://img.shields.io/badge/Method-QPen%3A%3AsetJoinStyle-blue) ![Method: QPen::setDashPattern](https://img.shields.io/badge/Method-QPen%3A%3AsetDashPattern-blue)

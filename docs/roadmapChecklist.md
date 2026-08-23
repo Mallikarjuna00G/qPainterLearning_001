@@ -53,7 +53,8 @@ This document serves as the master tracking sheet and context anchor to ensure w
     - [qPainter_018](../qPainter_018)
   - ✅ Matrix operations: Inspect and manipulate the transformation matrix using [QPainter::worldTransform()](https://doc.qt.io/qt-6.8/qpainter.html#worldTransform), [QPainter::setWorldTransform()](https://doc.qt.io/qt-6.8/qpainter.html#setWorldTransform), [QPainter::resetTransform()](https://doc.qt.io/qt-6.8/qpainter.html#resetTransform), [QPainter::deviceTransform()](https://doc.qt.io/qt-6.8/qpainter.html#deviceTransform), and [QPainter::combinedTransform()](https://doc.qt.io/qt-6.8/qpainter.html#combinedTransform)
     - [qPainter_019](../qPainter_019)
-  - ⏳ Logical-to-Physical mapping: Implement window-to-viewport transformations using [QPainter::setWindow()](https://doc.qt.io/qt-6.8/qpainter.html#setWindow) / [QPainter::window()](https://doc.qt.io/qt-6.8/qpainter.html#window) and [QPainter::setViewport()](https://doc.qt.io/qt-6.8/qpainter.html#setViewport) / [QPainter::viewport()](https://doc.qt.io/qt-6.8/qpainter.html#viewport)
+  - ✅ Logical-to-Physical mapping: Implement window-to-viewport transformations using [QPainter::setWindow()](https://doc.qt.io/qt-6.8/qpainter.html#setWindow) / [QPainter::window()](https://doc.qt.io/qt-6.8/qpainter.html#window) and [QPainter::setViewport()](https://doc.qt.io/qt-6.8/qpainter.html#setViewport) / [QPainter::viewport()](https://doc.qt.io/qt-6.8/qpainter.html#viewport)
+    - [qPainter_020](../qPainter_020)
   - ⏳ Polar coordinate helper: Construct a polar-to-Cartesian function `(r, theta) -> QPointF` to assist circular drawings
 
 - ⏳ **Day 4: Complex Geometry & Bézier Curves (QPainterPath)**

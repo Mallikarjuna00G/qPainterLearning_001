@@ -1112,3 +1112,44 @@ classDiagram
 ```
 
 ![Method: QPainter::worldTransform](https://img.shields.io/badge/Method-QPainter%3A%3AworldTransform-blue) ![Method: QPainter::setWorldTransform](https://img.shields.io/badge/Method-QPainter%3A%3AsetWorldTransform-blue) ![Method: QPainter::resetTransform](https://img.shields.io/badge/Method-QPainter%3A%3AresetTransform-blue)
+
+---
+
+## qPainter_020
+- [qPainter_020](../qPainter_020)
+- **Brief**: Introduction to Logical-to-Physical coordinate mapping using `setWindow()` and `setViewport()`.
+
+**Topics:**
+- Logical Coordinate System (Window): `QPainter::setWindow()`
+- Physical Pixel Mapping (Viewport): `QPainter::setViewport()`
+
+**Key Takeaway: The Chessboard Analogy**
+- The **Viewport** is the physical screen on your monitor (measured in raw pixels). 
+- The **Window** is your mathematical coordinate system (measured in whatever logical units you want). 
+- If you want to draw an 8x8 chessboard, you can `setWindow(0, 0, 8, 8)` and simply draw 1x1 rectangles. Qt will automatically scale and translate those logical 1x1 squares to fill whatever physical pixel space you defined in the Viewport!
+- **The Math**: `Physical Pixels = Logical Units * (Viewport Size / Window Size)`. For example, if your logical window is 8 units wide, and your physical viewport is 800 pixels wide, a logical rectangle of width 1 (one chess square) becomes `1 * (800 / 8) = 100` physical pixels wide on the screen.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +setWindow(x: int, y: int, width: int, height: int) void
+        +setViewport(x: int, y: int, width: int, height: int) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+```
+
+![Method: QPainter::setWindow](https://img.shields.io/badge/Method-QPainter%3A%3AsetWindow-blue) ![Method: QPainter::setViewport](https://img.shields.io/badge/Method-QPainter%3A%3AsetViewport-blue)

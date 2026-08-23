@@ -996,3 +996,49 @@ classDiagram
 ```
 
 ![Method: QPainter::setBrush](https://img.shields.io/badge/Method-QPainter%3A%3AsetBrush-blue) ![Method: QPainter::drawRect](https://img.shields.io/badge/Method-QPainter%3A%3AdrawRect-blue) ![Method: QPainter::drawEllipse](https://img.shields.io/badge/Method-QPainter%3A%3AdrawEllipse-blue) ![Method: QGradient::setColorAt](https://img.shields.io/badge/Method-QGradient%3A%3AsetColorAt-blue) ![Method: QGradient::setSpread](https://img.shields.io/badge/Method-QGradient%3A%3AsetSpread-blue)
+
+---
+
+## qPainter_018
+- [qPainter_018](../qPainter_018)
+- **Brief**: Introduction to Affine Transformations. Instead of drawing shapes at different geometric coordinates, we move, scale, rotate, and shear the coordinate system itself while drawing the shapes at `(0,0)`.
+
+**Topics:**
+- Translation: `QPainter::translate()`
+- Scaling: `QPainter::scale()`
+- Rotation: `QPainter::rotate()`
+- Shearing: `QPainter::shear()`
+
+**Key Takeaway: The Inverted Y-Axis Gotcha**
+- In standard Cartesian math (where Y points up), a positive horizontal shear shifts the *top* of a shape to the right, creating a right-leaning shape (like *italic* text).
+- Because Qt's Y-axis points **down**, positive Y values push the X coordinate to the right. This means the *bottom* of the shape is pushed to the right, causing the shape to visually lean to the **left**! To create a standard right-leaning shear in Qt, you must pass a negative horizontal shear value.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+        -drawGridAndRect(painter: QPainter&, label: QString) void
+    }
+    
+    class QPainter {
+        +translate(dx: qreal, dy: qreal) void
+        +scale(sx: qreal, sy: qreal) void
+        +rotate(angle: qreal) void
+        +shear(sh: qreal, sv: qreal) void
+        +save() void
+        +restore() void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+```
+
+![Method: QPainter::translate](https://img.shields.io/badge/Method-QPainter%3A%3Atranslate-blue) ![Method: QPainter::scale](https://img.shields.io/badge/Method-QPainter%3A%3Ascale-blue) ![Method: QPainter::rotate](https://img.shields.io/badge/Method-QPainter%3A%3Arotate-blue) ![Method: QPainter::shear](https://img.shields.io/badge/Method-QPainter%3A%3Ashear-blue)

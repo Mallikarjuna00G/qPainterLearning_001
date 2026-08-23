@@ -97,7 +97,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[04]` drawPolyline(const QPolygonF &points)
 - `[00]` drawRect(const QRect &rectangle)
 - `[02]` drawRect(const QRectF &rectangle)
-- `[15]` drawRect(int x, int y, int width, int height)
+- `[16]` drawRect(int x, int y, int width, int height)
 - `[00]` drawRects(const QList<QRect> &rectangles)
 - `[01]` drawRects(const QList<QRectF> &rectangles)
 - `[00]` drawRects(const QRect *rectangles, int rectCount)
@@ -113,7 +113,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` drawText(const QRect &rectangle, int flags, const QString &text, QRect *boundingRect = nullptr)
 - `[01]` drawText(const QRectF &rectangle, const QString &text, const QTextOption &option = QTextOption())
 - `[02]` drawText(const QRectF &rectangle, int flags, const QString &text, QRectF *boundingRect = nullptr)
-- `[15]` drawText(int x, int y, const QString &text)
+- `[16]` drawText(int x, int y, const QString &text)
 - `[00]` drawText(int x, int y, int width, int height, int flags, const QString &text, QRect *boundingRect = nullptr)
 - `[00]` drawTiledPixmap(const QRect &rectangle, const QPixmap &pixmap, const QPoint &position = QPoint())
 - `[00]` drawTiledPixmap(const QRectF &rectangle, const QPixmap &pixmap, const QPointF &position = QPointF())
@@ -148,15 +148,15 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` opacity() const
 - `[00]` paintEngine() const
 - `[00]` pen() const
-- `[00]` resetTransform()
+- `[01]` resetTransform()
 - `[10]` restore()
 - `[01]` rotate(qreal angle)
 - `[10]` save()
-- `[01]` scale(qreal sx, qreal sy)
+- `[02]` scale(qreal sx, qreal sy)
 - `[01]` setBackground(const QBrush &brush)
 - `[01]` setBackgroundMode(Qt::BGMode mode)
 - `[00]` setBrush(Qt::BrushStyle style)
-- `[13]` setBrush(const QBrush &brush)
+- `[14]` setBrush(const QBrush &brush)
 - `[00]` setBrushOrigin(const QPoint &position)
 - `[00]` setBrushOrigin(const QPointF &position)
 - `[01]` setBrushOrigin(int x, int y)
@@ -182,17 +182,17 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` setWindow(const QRect &rectangle)
 - `[00]` setWindow(int x, int y, int width, int height)
 - `[00]` setWorldMatrixEnabled(bool enable)
-- `[00]` setWorldTransform(const QTransform &matrix, bool combine = false)
+- `[01]` setWorldTransform(const QTransform &matrix, bool combine = false)
 - `[01]` shear(qreal sh, qreal sv)
 - `[00]` strokePath(const QPainterPath &path, const QPen &pen)
 - `[00]` testRenderHint(
 - `[00]` transform() const
 - `[00]` translate(const QPoint &offset)
 - `[00]` translate(const QPointF &offset)
-- `[12]` translate(qreal dx, qreal dy)
+- `[13]` translate(qreal dx, qreal dy)
 - `[00]` viewTransformEnabled() const
 - `[00]` viewport() const
 - `[00]` window() const
 - `[00]` worldMatrixEnabled() const
-- `[00]` worldTransform() const
+- `[05]` worldTransform() const
 - `[00]` ~QPainter()

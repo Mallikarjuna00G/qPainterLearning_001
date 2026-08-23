@@ -1042,3 +1042,73 @@ classDiagram
 ```
 
 ![Method: QPainter::translate](https://img.shields.io/badge/Method-QPainter%3A%3Atranslate-blue) ![Method: QPainter::scale](https://img.shields.io/badge/Method-QPainter%3A%3Ascale-blue) ![Method: QPainter::rotate](https://img.shields.io/badge/Method-QPainter%3A%3Arotate-blue) ![Method: QPainter::shear](https://img.shields.io/badge/Method-QPainter%3A%3Ashear-blue)
+
+---
+
+## qPainter_019
+- [qPainter_019](../qPainter_019)
+- **Brief**: Peeling back the abstraction layer of `QPainter`'s convenience transformation methods to inspect and manually manipulate the underlying `QTransform` matrix engine.
+
+**Topics:**
+- Inspecting Matrix State: `QPainter::worldTransform()`
+- Resetting Matrix State: `QPainter::resetTransform()`
+- Overriding Matrix State: `QPainter::setWorldTransform()`
+- `QTransform` API
+
+**Key Takeaway: The `QTransform` Blueprint**
+- `QPainter` drives its coordinate system using a 3x3 Affine Transformation matrix. Every time you call a convenience method like `painter.rotate()`, Qt performs trigonometry to update 4 cells in this matrix simultaneously.
+
+| Matrix Cell | Qt Method Equivalent | What it controls | Default (Identity) |
+| :---: | :--- | :--- | :---: |
+| **`m11`** | `scale(sx, ...)` | **Horizontal Scale** (X stretch) | `1.0` |
+| **`m12`** | `shear(..., sv)` | **Vertical Shear** (Skews Y based on X) | `0.0` |
+| **`m13`** | *(Advanced)* | Horizontal Projection (Perspective) | `0.0` |
+| **`m21`** | `shear(sh, ...)` | **Horizontal Shear** (Skews X based on Y) | `0.0` |
+| **`m22`** | `scale(..., sy)` | **Vertical Scale** (Y stretch) | `1.0` |
+| **`m23`** | *(Advanced)* | Vertical Projection (Perspective) | `0.0` |
+| **`m31`** | `translate(dx, ...)` | **Horizontal Translation** (Move X) | `0.0` |
+| **`m32`** | `translate(..., dy)` | **Vertical Translation** (Move Y) | `0.0` |
+| **`m33`** | *(Advanced)* | Global Scale / Projection factor | `1.0` |
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+        -printMatrix(label: QString, t: QTransform) void
+    }
+    
+    class QPainter {
+        +worldTransform() QTransform
+        +setWorldTransform(matrix: QTransform, combine: bool) void
+        +resetTransform() void
+        +translate(dx: qreal, dy: qreal) void
+        +scale(sx: qreal, sy: qreal) void
+    }
+    
+    class QTransform {
+        +translate(dx: qreal, dy: qreal) QTransform
+        +scale(sx: qreal, sy: qreal) QTransform
+        +rotate(angle: qreal) QTransform
+        +shear(sh: qreal, sv: qreal) QTransform
+        +m11() qreal
+        +m12() qreal
+        +m13() qreal
+        +m21() qreal
+        +m22() qreal
+        +m23() qreal
+        +m31() qreal
+        +m32() qreal
+        +m33() qreal
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QTransform : Inspects
+    QPainter ..> QTransform : Returns / Receives
+```
+
+![Method: QPainter::worldTransform](https://img.shields.io/badge/Method-QPainter%3A%3AworldTransform-blue) ![Method: QPainter::setWorldTransform](https://img.shields.io/badge/Method-QPainter%3A%3AsetWorldTransform-blue) ![Method: QPainter::resetTransform](https://img.shields.io/badge/Method-QPainter%3A%3AresetTransform-blue)

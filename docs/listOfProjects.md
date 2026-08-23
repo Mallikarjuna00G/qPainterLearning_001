@@ -1153,3 +1153,44 @@ classDiagram
 ```
 
 ![Method: QPainter::setWindow](https://img.shields.io/badge/Method-QPainter%3A%3AsetWindow-blue) ![Method: QPainter::setViewport](https://img.shields.io/badge/Method-QPainter%3A%3AsetViewport-blue)
+
+---
+
+## qPainter_021
+- [qPainter_021](../qPainter_021)
+- **Brief**: Introduction to Polar Coordinates and trigonometric circular drawing.
+
+**Topics:**
+- Implementing a `polarToCartesian` mathematical helper function.
+- Plotting shapes on exact orbits (radar UI design).
+- Embedded hardware considerations regarding floating-point math overhead.
+
+**Key Takeaway: Polar Coordinates**
+- A Cartesian system plots points using a grid of `x` (left/right) and `y` (up/down).
+- A Polar system plots points using purely `radius` (distance from center) and `angle`.
+- Using `x = radius * cos(angle)` and `y = radius * sin(angle)` allows for perfectly plotting points in a circle (e.g., clock faces, radar screens).
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+        -polarToCartesian(radius: qreal, angleDegrees: qreal) const QPointF
+    }
+    
+    class QPainter {
+        +drawEllipse(center: QPointF, rx: qreal, ry: qreal) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+```
+
+![Method: QPainter::drawEllipse](https://img.shields.io/badge/Method-QPainter%3A%3AdrawEllipse-blue)

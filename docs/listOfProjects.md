@@ -1465,3 +1465,50 @@ classDiagram
 ```
 
 ![Method: QPainterPathStroker::setWidth](https://img.shields.io/badge/Method-QPainterPathStroker%3A%3AsetWidth-blue) ![Method: QPainterPathStroker::setCurveThreshold](https://img.shields.io/badge/Method-QPainterPathStroker%3A%3AsetCurveThreshold-blue) ![Method: QPainterPathStroker::createStroke](https://img.shields.io/badge/Method-QPainterPathStroker%3A%3AcreateStroke-blue)
+
+---
+
+## qPainter_027
+- [qPainter_027](../qPainter_027)
+- **Brief**: Performing vector calculations on a `QPainterPath` to dynamically place and align objects (like arrowheads) along curves.
+
+**Topics:**
+- Finding a specific coordinate on a bezier curve using `pointAtPercent()`.
+- Calculating the tangent vector (angle) of a bezier curve at a specific point using `angleAtPercent()`.
+- Using translations and rotations to align sub-shapes perfectly with the flow of a master shape.
+
+**Key Takeaway: Analytical Paths**
+- A `QPainterPath` is not just a drawing instruction; it is an analytical geometry object. You can query it for lengths, intersections, points, and tangents.
+- `angleAtPercent(t)` returns the standard mathematical angle (counter-clockwise). Because `QPainter::rotate()` expects clockwise degrees, you must negate the angle (`-angle`) to align your coordinate system with the tangent vector of the curve!
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainterPath {
+        +pointAtPercent(t: qreal) QPointF const
+        +angleAtPercent(t: qreal) qreal const
+    }
+    
+    class QPainter {
+        +drawPath(path: QPainterPath) void
+        +rotate(a: qreal) void
+        +translate(offset: QPointF) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPainterPath : Instantiates
+```
+
+![Method: QPainterPath::pointAtPercent](https://img.shields.io/badge/Method-QPainterPath%3A%3ApointAtPercent-blue) ![Method: QPainterPath::angleAtPercent](https://img.shields.io/badge/Method-QPainterPath%3A%3AangleAtPercent-blue)

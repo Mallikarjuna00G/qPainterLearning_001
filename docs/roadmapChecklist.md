@@ -60,7 +60,7 @@ This document serves as the master tracking sheet and context anchor to ensure w
 - ⏳ **Day 4: Complex Geometry & Bézier Curves (QPainterPath)**
   - ✅ Path construction: Construct shapes using [QPainterPath::moveTo()](https://doc.qt.io/qt-6.8/qpainterpath.html#moveTo), [QPainterPath::lineTo()](https://doc.qt.io/qt-6.8/qpainterpath.html#lineTo), [QPainterPath::cubicTo()](https://doc.qt.io/qt-6.8/qpainterpath.html#cubicTo), and [QPainterPath::quadTo()](https://doc.qt.io/qt-6.8/qpainterpath.html#quadTo)
   - ✅ Path drawing actions: Draw outline and fill paths using [QPainter::drawPath()](https://doc.qt.io/qt-6.8/qpainter.html#drawPath), [QPainter::fillPath()](https://doc.qt.io/qt-6.8/qpainter.html#fillPath), and [QPainter::strokePath()](https://doc.qt.io/qt-6.8/qpainter.html#strokePath)
-  - ⏳ Path fill rules: Compare [Qt::WindingFill](https://doc.qt.io/qt-6.8/qt.html#FillRule-enum) and [Qt::OddEvenFill](https://doc.qt.io/qt-6.8/qt.html#FillRule-enum) fill behaviors
+  - ✅ Path fill rules: Compare [Qt::WindingFill](https://doc.qt.io/qt-6.8/qt.html#FillRule-enum) and [Qt::OddEvenFill](https://doc.qt.io/qt-6.8/qt.html#FillRule-enum) fill behaviors
   - ⏳ Stroking & outlines: Use [QPainterPathStroker](https://doc.qt.io/qt-6.8/qpainterpathstroker.html) for complex outlines and adjust curve error tolerance with [QPainterPathStroker::setCurveThreshold()](https://doc.qt.io/qt-6.8/qpainterpathstroker.html#setCurveThreshold)
   - ⏳ Vector calculations: Calculate tangents and midpoints along curves to place arrowheads dynamically
 

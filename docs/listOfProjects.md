@@ -1367,3 +1367,47 @@ classDiagram
 ```
 
 ![Method: QPainter::drawPath](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPath-blue) ![Method: QPainter::strokePath](https://img.shields.io/badge/Method-QPainter%3A%3AstrokePath-blue) ![Method: QPainter::fillPath](https://img.shields.io/badge/Method-QPainter%3A%3AfillPath-blue)
+
+---
+
+## qPainter_025
+- [qPainter_025](../qPainter_025)
+- **Brief**: Understanding Qt's Fill Rules for determining the "inside" of complex, self-intersecting paths.
+
+**Topics:**
+- Testing `Qt::OddEvenFill` (the default rule).
+- Testing `Qt::WindingFill` (the non-zero winding rule).
+- Creating complex hole-punched geometries.
+
+**Key Takeaway: Ray-Casting & Path Winding**
+- **OddEvenFill** acts like a laser beam. It shoots a ray from a given point and counts how many path boundaries it crosses. If it crosses an odd number, the area is "inside" and gets painted. If it crosses an even number, it's a hole. It ignores the direction the path was drawn.
+- **WindingFill** counts directional loops. If you draw a shape clockwise, it adds +1 to the area. If you draw counter-clockwise, it subtracts -1. If the sum is `0`, the area is a hole. If the sum is anything else, it gets painted. This makes drawing direction extremely critical for creating donuts or hollow compound shapes.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainterPath {
+        +setFillRule(rule: Qt::FillRule) void
+    }
+    
+    class QPainter {
+        +drawPath(path: QPainterPath) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPainterPath : Instantiates
+```
+
+![Method: QPainterPath::setFillRule](https://img.shields.io/badge/Method-QPainterPath%3A%3AsetFillRule-blue)

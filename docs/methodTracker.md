@@ -61,7 +61,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` drawLines(const QList<QPointF> &pointPairs)
 - `[00]` drawLines(const QPoint *pointPairs, int lineCount)
 - `[00]` drawLines(const QPointF *pointPairs, int lineCount)
-- `[00]` drawPath(const QPainterPath &path)
+- `[02]` drawPath(const QPainterPath &path)
 - `[00]` drawPicture(const QPoint &point, const QPicture &picture)
 - `[00]` drawPicture(const QPointF &point, const QPicture &picture)
 - `[00]` drawPicture(int x, int y, const QPicture &picture)
@@ -82,7 +82,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` drawPixmapFragments(const QPainter::PixmapFragment *fragments, int fragmentCount, QPainter::PixmapFragmentHints hints = PixmapFragmentHints())
 - `[00]` drawPoint(const QPoint &position)
 - `[00]` drawPoint(const QPointF &position)
-- `[06]` drawPoint(int x, int y)
+- `[09]` drawPoint(int x, int y)
 - `[00]` drawPoints(const QPoint *points, int pointCount)
 - `[01]` drawPoints(const QPointF *points, int pointCount)
 - `[00]` drawPoints(const QPolygon &points)
@@ -156,7 +156,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[01]` setBackground(const QBrush &brush)
 - `[01]` setBackgroundMode(Qt::BGMode mode)
 - `[00]` setBrush(Qt::BrushStyle style)
-- `[18]` setBrush(const QBrush &brush)
+- `[20]` setBrush(const QBrush &brush)
 - `[00]` setBrushOrigin(const QPoint &position)
 - `[00]` setBrushOrigin(const QPointF &position)
 - `[01]` setBrushOrigin(int x, int y)
@@ -172,8 +172,8 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` setOpacity(qreal opacity)
 - `[01]` setPen(Qt::PenStyle style)
 - `[05]` setPen(const QColor &color)
-- `[41]` setPen(const QPen &pen)
-- `[04]` setRenderHint(QPainter::RenderHint hint, bool on = true)
+- `[45]` setPen(const QPen &pen)
+- `[06]` setRenderHint(QPainter::RenderHint hint, bool on = true)
 - `[00]` setRenderHints(QPainter::RenderHints hints, bool on = true)
 - `[00]` setTransform(const QTransform &transform, bool combine = false)
 - `[00]` setViewTransformEnabled(bool enable)
@@ -195,4 +195,12 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` window() const
 - `[00]` worldMatrixEnabled() const
 - `[05]` worldTransform() const
+
+## QPainterPath Methods
+- `[01]` addEllipse(int x, int y, int width, int height)
+- `[01]` closeSubpath()
+- `[02]` lineTo(int x, int y)
+- `[02]` moveTo(int x, int y)
+- `[01]` quadTo(int ctrlX, int ctrlY, int endX, int endY)
+- `[01]` cubicTo(int ctrl1X, int ctrl1Y, int ctrl2X, int ctrl2Y, int endX, int endY)
 - `[00]` ~QPainter()

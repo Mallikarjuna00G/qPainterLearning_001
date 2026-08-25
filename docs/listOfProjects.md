@@ -1194,3 +1194,126 @@ classDiagram
 ```
 
 ![Method: QPainter::drawEllipse](https://img.shields.io/badge/Method-QPainter%3A%3AdrawEllipse-blue)
+
+---
+
+## qPainter_022
+- [qPainter_022](../qPainter_022)
+- **Brief**: Introduction to `QPainterPath` and unified vector geometry construction.
+
+**Topics:**
+- Building straight-line paths using `moveTo()` and `lineTo()`.
+- Closing paths automatically using `closeSubpath()`.
+- The advantages of `QPainterPath` over primitive drawing functions.
+- Rendering unified paths with `drawPath()`.
+
+**Key Takeaway: The Unified Geometry Magic**
+- If you draw a triangle using three separate `drawLine()` calls, Qt treats them as three independent sticks. They won't join cleanly at the corners, and you cannot easily fill the space between them.
+- By using a `QPainterPath`, Qt treats the entire collection of lines as a **single, solid piece of geometry**. It perfectly joins the corners, allows you to fill the shape with a brush, and accurately punches out intersecting geometry (like the circle inside the triangle) using mathematical fill rules!
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainterPath {
+        +moveTo(x: int, y: int) void
+        +lineTo(x: int, y: int) void
+        +closeSubpath() void
+        +addEllipse(x: int, y: int, width: int, height: int) void
+    }
+    
+    class QPainter {
+        +drawPath(path: QPainterPath) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPainterPath : Instantiates
+```
+
+![Method: QPainterPath::moveTo](https://img.shields.io/badge/Method-QPainterPath%3A%3AmoveTo-blue) ![Method: QPainterPath::lineTo](https://img.shields.io/badge/Method-QPainterPath%3A%3AlineTo-blue) ![Method: QPainterPath::closeSubpath](https://img.shields.io/badge/Method-QPainterPath%3A%3AcloseSubpath-blue) ![Method: QPainter::drawPath](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPath-blue)
+
+---
+
+## qPainter_023
+- [qPainter_023](../qPainter_023)
+- **Brief**: Introduction to Bézier Curves and mathematical curve interpolation.
+
+**Topics:**
+- Drawing Quadratic Bézier Curves using `quadTo()`.
+- Drawing Cubic Bézier Curves using `cubicTo()`.
+- Visualizing control points using `drawPoint()`.
+- The mathematical derivation of Bézier curves using De Casteljau's algorithm (Linear Interpolation).
+
+**Key Takeaway: Bézier Curves and De Casteljau's Algorithm**
+- A Bézier curve is an interpolation algorithm that allows smooth curves to be drawn without storing infinite points. 
+- A **Quadratic** curve (`quadTo`) uses 1 control point. It creates a parabola.
+- A **Cubic** curve (`cubicTo`) uses 2 control points. It can create an "S" shape (inflection point).
+
+### Mathematical Derivation:
+
+Bézier curves are built upon **Linear Interpolation** (the mathematical process of estimating a value somewhere between two known points). In this case, we use a time parameter `t` (from 0.0 to 1.0) to calculate the exact position of a point moving along a straight line between two static anchors.
+$Linear(t) = (1 - t)A + tB$
+
+To derive the **Quadratic** formula using three anchor points ($P_0, P_1, P_2$):
+1. Interpolate along the straight lines connecting the anchors to create two dynamically moving dots: 
+   - $A(t) = (1-t)P_0 + tP_1$ (moving between $P_0$ and $P_1$)
+   - $B(t) = (1-t)P_1 + tP_2$ (moving between $P_1$ and $P_2$)
+2. Interpolate those two linear points into the final **quadratic** point: $$Q(t) = (1-t)A(t) + tB(t)$$
+3. Substitute A and B: $$Q(t) = (1-t)[(1-t)P_0 + tP_1] + t[(1-t)P_1 + tP_2]$$
+4. Distribute: $$Q(t) = (1-t)^2 P_0 + t(1-t)P_1 + t(1-t)P_1 + t^2 P_2$$
+5. Expand and combine: $$Q(t) = (1-t)^2 P_0 + 2(1-t)t P_1 + t^2 P_2$$
+
+To derive the **Cubic** formula using four anchor points ($P_0, P_1, P_2, P_3$):
+1. Interpolate along the straight lines connecting the anchors to create three dynamically moving dots: 
+   - $A(t) = (1-t)P_0 + tP_1$ (moving between $P_0$ and $P_1$)
+   - $B(t) = (1-t)P_1 + tP_2$ (moving between $P_1$ and $P_2$)
+   - $C(t) = (1-t)P_2 + tP_3$ (moving between $P_2$ and $P_3$)
+2. Interpolate those three points into two **quadratic** points: $$Q_1(t) = (1-t)A(t) + tB(t)$$ and $$Q_2(t) = (1-t)B(t) + tC(t)$$
+3. Interpolate those two quadratic points into the final **cubic** point: $$Cubic(t) = (1-t)Q_1(t) + tQ_2(t)$$
+4. Substitute $Q_1$ and $Q_2$: $$Cubic(t) = (1-t)[(1-t)A(t) + tB(t)] + t[(1-t)B(t) + tC(t)]$$
+5. Distribute: $$Cubic(t) = (1-t)^2 A(t) + 2(1-t)t B(t) + t^2 C(t)$$
+6. Substitute A, B, and C: $$Cubic(t) = (1-t)^2 [(1-t)P_0 + tP_1] + 2(1-t)t [(1-t)P_1 + tP_2] + t^2 [(1-t)P_2 + tP_3]$$
+7. Expand and combine: $$Cubic(t) = (1-t)^3 P_0 + 3(1-t)^2 t P_1 + 3(1-t)t^2 P_2 + t^3 P_3$$
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainterPath {
+        +moveTo(x: int, y: int) void
+        +quadTo(ctrlX: int, ctrlY: int, endX: int, endY: int) void
+        +cubicTo(ctrl1X: int, ctrl1Y: int, ctrl2X: int, ctrl2Y: int, endX: int, endY: int) void
+    }
+    
+    class QPainter {
+        +drawPath(path: QPainterPath) void
+        +drawPoint(x: int, y: int) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPainterPath : Instantiates
+```
+
+![Method: QPainterPath::quadTo](https://img.shields.io/badge/Method-QPainterPath%3A%3AquadTo-blue) ![Method: QPainterPath::cubicTo](https://img.shields.io/badge/Method-QPainterPath%3A%3AcubicTo-blue)

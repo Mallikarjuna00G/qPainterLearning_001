@@ -1317,3 +1317,53 @@ classDiagram
 ```
 
 ![Method: QPainterPath::quadTo](https://img.shields.io/badge/Method-QPainterPath%3A%3AquadTo-blue) ![Method: QPainterPath::cubicTo](https://img.shields.io/badge/Method-QPainterPath%3A%3AcubicTo-blue)
+
+---
+
+## qPainter_024
+- [qPainter_024](../qPainter_024)
+- **Brief**: Differentiating between rendering the outline, the fill, or both for a given `QPainterPath`.
+
+**Topics:**
+- Drawing both the stroke and fill simultaneously using `drawPath()`.
+- Drawing only the outline using `strokePath()`.
+- Drawing only the interior using `fillPath()`.
+
+**Key Takeaway: Reusable Geometry**
+- A `QPainterPath` is pure, mathematical geometry. It has no color, no thickness, and no appearance until you instruct `QPainter` to render it.
+- This allows for extreme UI flexibility: you can construct a complex shape (like a custom tab or button) once in memory, and then render it differently using `strokePath()` or `fillPath()` depending on its state (e.g., hovered, clicked, disabled) without having to recalculate the geometry.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainterPath {
+        +moveTo(x: int, y: int) void
+        +lineTo(x: int, y: int) void
+        +closeSubpath() void
+    }
+    
+    class QPainter {
+        +pen() QPen const
+        +brush() QBrush const
+        +drawPath(path: QPainterPath) void
+        +strokePath(path: QPainterPath, pen: QPen) void
+        +fillPath(path: QPainterPath, brush: QBrush) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPainterPath : Instantiates
+```
+
+![Method: QPainter::drawPath](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPath-blue) ![Method: QPainter::strokePath](https://img.shields.io/badge/Method-QPainter%3A%3AstrokePath-blue) ![Method: QPainter::fillPath](https://img.shields.io/badge/Method-QPainter%3A%3AfillPath-blue)

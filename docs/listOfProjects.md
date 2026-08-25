@@ -1411,3 +1411,57 @@ classDiagram
 ```
 
 ![Method: QPainterPath::setFillRule](https://img.shields.io/badge/Method-QPainterPath%3A%3AsetFillRule-blue)
+
+---
+
+## qPainter_026
+- [qPainter_026](../qPainter_026)
+- **Brief**: Converting zero-thickness mathematical paths into solid, fillable geometry using `QPainterPathStroker`.
+
+**Topics:**
+- Configuring stroke width, cap styles, and join styles on a stroker.
+- Understanding `setCurveThreshold` for controlling the precision of generated outlines.
+- Using `createStroke()` to generate a new `QPainterPath`.
+- Filling generated outlines with gradients.
+
+**Key Takeaway: Expanding Geometry**
+- `QPainterPathStroker` is a geometry generation tool. It takes an input path and physically constructs a new path representing the outline of the original.
+- This is extremely powerful because standard pens (`QPen`) have limitations (like applying complex gradients to the stroke). By converting the stroke into a fillable shape, you can apply any brush, use it for hit-testing, or merge it with other shapes using boolean operations.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainterPathStroker {
+        +setWidth(width: qreal) void
+        +setCapStyle(style: Qt::PenCapStyle) void
+        +setCurveThreshold(threshold: qreal) void
+        +createStroke(path: QPainterPath) QPainterPath
+    }
+    
+    class QPainterPath {
+        +moveTo(x: int, y: int) void
+        +cubicTo(ctrl1X: int, ctrl1Y: int, ctrl2X: int, ctrl2Y: int, endX: int, endY: int) void
+    }
+    
+    class QPainter {
+        +drawPath(path: QPainterPath) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPainterPath : Instantiates
+    CanvasWidget ..> QPainterPathStroker : Instantiates
+```
+
+![Method: QPainterPathStroker::setWidth](https://img.shields.io/badge/Method-QPainterPathStroker%3A%3AsetWidth-blue) ![Method: QPainterPathStroker::setCurveThreshold](https://img.shields.io/badge/Method-QPainterPathStroker%3A%3AsetCurveThreshold-blue) ![Method: QPainterPathStroker::createStroke](https://img.shields.io/badge/Method-QPainterPathStroker%3A%3AcreateStroke-blue)

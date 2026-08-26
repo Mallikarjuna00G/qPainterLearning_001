@@ -74,7 +74,8 @@ This document serves as the master tracking sheet and context anchor to ensure w
   - ✅ Precise text measurements: Measure text bounding boxes using [QFontMetricsF::boundingRect()](https://doc.qt.io/qt-6.8/qfontmetricsf.html#boundingRect) and [QPainter::boundingRect()](https://doc.qt.io/qt-6.8/qpainter.html#boundingRect-1)
     - [qPainter_028](../qPainter_028)
     - [qPainter_029](../qPainter_029)
-  - ⏳ Anchor structures: Build node anchors (e.g. North, South, East, West, Center) for placement of multi-line text labels
+  - ✅ Anchor structures: Build node anchors (e.g. North, South, East, West, Center) for placement of multi-line text labels
+    - [qPainter_030](../qPainter_030)
   - ⏳ Clipping regions: Restrict rendering areas using [QPainter::setClipRect()](https://doc.qt.io/qt-6.8/qpainter.html#setClipRect), [QPainter::setClipRegion()](https://doc.qt.io/qt-6.8/qpainter.html#setClipRegion), [QPainter::setClipPath()](https://doc.qt.io/qt-6.8/qpainter.html#setClipPath), and query clip state with [QPainter::hasClipping()](https://doc.qt.io/qt-6.8/qpainter.html#hasClipping), [QPainter::clipRegion()](https://doc.qt.io/qt-6.8/qpainter.html#clipRegion), and [QPainter::clipPath()](https://doc.qt.io/qt-6.8/qpainter.html#clipPath)
   - ⏳ Composition Modes: Apply Porter-Duff compositing rules using [QPainter::setCompositionMode()](https://doc.qt.io/qt-6.8/qpainter.html#setCompositionMode) and test modes like [QPainter::CompositionMode_SourceOver](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum), [QPainter::CompositionMode_Source](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum), and [QPainter::CompositionMode_Clear](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum)
 

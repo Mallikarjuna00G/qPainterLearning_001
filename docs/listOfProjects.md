@@ -1601,3 +1601,44 @@ classDiagram
 ```
 
 ![Method: QPainter::boundingRect](https://img.shields.io/badge/Method-QPainter%3A%3AboundingRect-blue)
+
+---
+
+## qPainter_030
+- [qPainter_030](../qPainter_030)
+- **Brief**: Building geometric anchor points on nodes to automatically position multi-line text labels.
+
+**Topics:**
+- Extracting geometric edge coordinates from a `QRectF` using `top()`, `bottom()`, `left()`, `right()`, and `center()`.
+- Combining coordinates to build North, South, East, and West anchor `QPointF` structures.
+- Utilizing C++ lambdas (`[&]`) to cleanly execute repetitive drawing tasks within `paintEvent`.
+- Dynamically offsetting text `QRectF` bounds so they correctly attach to anchor points without overlapping the parent node.
+
+**Key Takeaway: Anchor Offsets**
+- By measuring text with `QPainter::boundingRect()` first, you obtain the exact height and width of the label. You can then use `QRectF::moveTop()`, `moveBottom()`, `moveLeft()`, and `moveRight()` to cleanly align the label's bounding box against the node's anchor point, ensuring the text pushes outward away from the node instead of drawing over it.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +boundingRect(rectangle: QRectF, flags: int, text: QString) QRectF
+        +drawText(rectangle: QRectF, flags: int, text: QString, boundingRect: QRectF*) void
+        +fillRect(rectangle: QRectF, color: QColor) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+```
+
+![Method: QPainter::fillRect](https://img.shields.io/badge/Method-QPainter%3A%3AfillRect-blue)

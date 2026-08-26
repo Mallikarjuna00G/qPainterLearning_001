@@ -59,13 +59,21 @@ This document serves as the master tracking sheet and context anchor to ensure w
     - [qPainter_021](../qPainter_021)
 - ✅ **Day 4: Complex Geometry & Bézier Curves (QPainterPath)**
   - ✅ Path construction: Construct shapes using [QPainterPath::moveTo()](https://doc.qt.io/qt-6.8/qpainterpath.html#moveTo), [QPainterPath::lineTo()](https://doc.qt.io/qt-6.8/qpainterpath.html#lineTo), [QPainterPath::cubicTo()](https://doc.qt.io/qt-6.8/qpainterpath.html#cubicTo), and [QPainterPath::quadTo()](https://doc.qt.io/qt-6.8/qpainterpath.html#quadTo)
+    - [qPainter_022](../qPainter_022)
+    - [qPainter_023](../qPainter_023)
   - ✅ Path drawing actions: Draw outline and fill paths using [QPainter::drawPath()](https://doc.qt.io/qt-6.8/qpainter.html#drawPath), [QPainter::fillPath()](https://doc.qt.io/qt-6.8/qpainter.html#fillPath), and [QPainter::strokePath()](https://doc.qt.io/qt-6.8/qpainter.html#strokePath)
+    - [qPainter_024](../qPainter_024)
   - ✅ Path fill rules: Compare [Qt::WindingFill](https://doc.qt.io/qt-6.8/qt.html#FillRule-enum) and [Qt::OddEvenFill](https://doc.qt.io/qt-6.8/qt.html#FillRule-enum) fill behaviors
+    - [qPainter_025](../qPainter_025)
   - ✅ Stroking & outlines: Use [QPainterPathStroker](https://doc.qt.io/qt-6.8/qpainterpathstroker.html) for complex outlines and adjust curve error tolerance with [QPainterPathStroker::setCurveThreshold()](https://doc.qt.io/qt-6.8/qpainterpathstroker.html#setCurveThreshold)
+    - [qPainter_026](../qPainter_026)
   - ✅ Vector calculations: Calculate tangents and midpoints along curves to place arrowheads dynamically
+    - [qPainter_027](../qPainter_027)
 
 - ⏳ **Day 5: Text Metrics, Anchors, Clipping & Composition Modes**
-  - ⏳ Precise text measurements: Measure text bounding boxes using [QFontMetricsF::boundingRect()](https://doc.qt.io/qt-6.8/qfontmetricsf.html#boundingRect) and [QPainter::boundingRect()](https://doc.qt.io/qt-6.8/qpainter.html#boundingRect-1)
+  - ✅ Precise text measurements: Measure text bounding boxes using [QFontMetricsF::boundingRect()](https://doc.qt.io/qt-6.8/qfontmetricsf.html#boundingRect) and [QPainter::boundingRect()](https://doc.qt.io/qt-6.8/qpainter.html#boundingRect-1)
+    - [qPainter_028](../qPainter_028)
+    - [qPainter_029](../qPainter_029)
   - ⏳ Anchor structures: Build node anchors (e.g. North, South, East, West, Center) for placement of multi-line text labels
   - ⏳ Clipping regions: Restrict rendering areas using [QPainter::setClipRect()](https://doc.qt.io/qt-6.8/qpainter.html#setClipRect), [QPainter::setClipRegion()](https://doc.qt.io/qt-6.8/qpainter.html#setClipRegion), [QPainter::setClipPath()](https://doc.qt.io/qt-6.8/qpainter.html#setClipPath), and query clip state with [QPainter::hasClipping()](https://doc.qt.io/qt-6.8/qpainter.html#hasClipping), [QPainter::clipRegion()](https://doc.qt.io/qt-6.8/qpainter.html#clipRegion), and [QPainter::clipPath()](https://doc.qt.io/qt-6.8/qpainter.html#clipPath)
   - ⏳ Composition Modes: Apply Porter-Duff compositing rules using [QPainter::setCompositionMode()](https://doc.qt.io/qt-6.8/qpainter.html#setCompositionMode) and test modes like [QPainter::CompositionMode_SourceOver](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum), [QPainter::CompositionMode_Source](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum), and [QPainter::CompositionMode_Clear](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum)

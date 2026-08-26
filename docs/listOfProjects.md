@@ -1512,3 +1512,92 @@ classDiagram
 ```
 
 ![Method: QPainterPath::pointAtPercent](https://img.shields.io/badge/Method-QPainterPath%3A%3ApointAtPercent-blue) ![Method: QPainterPath::angleAtPercent](https://img.shields.io/badge/Method-QPainterPath%3A%3AangleAtPercent-blue)
+
+---
+
+## qPainter_028
+- [qPainter_028](../qPainter_028)
+- **Brief**: Understanding typography metrics and accurately measuring text bounds using `QFontMetricsF`.
+
+**Topics:**
+- Measuring text analytically before drawing.
+- Defining a `QFont` and assigning it to `QPainter`.
+- Using `QFontMetricsF::boundingRect()` to capture logical bounding boxes.
+- Using `QFontMetricsF::tightBoundingRect()` to capture exact ink bounding boxes.
+- Visualizing baseline origins.
+
+**Key Takeaway: Analytical Typography**
+- `QFontMetricsF` is incredibly useful because it doesn't require a `QPainter` or an active paint event. You can use it in your UI logic to pre-calculate how much space a widget will need just based on its font and string contents.
+- There is a crucial difference between the logical `boundingRect` (which includes font-designed whitespace padding) and the ink `tightBoundingRect` (which perfectly hugs the drawn pixels).
+- The `boundingRect` it returns is tightly fitted. Because standard `drawText` uses `(0,0)` as the baseline origin (where the bottom of letters sit), the `boundingRect` will have negative `y` coordinates for ascenders (like 'H') and positive `y` coordinates for descenders (like 'p').
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QFontMetricsF {
+        +boundingRect(text: QString) QRectF const
+        +tightBoundingRect(text: QString) QRectF const
+    }
+    
+    class QPainter {
+        +setFont(font: QFont) void
+        +drawText(x: int, y: int, text: QString) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QFontMetricsF : Instantiates
+```
+
+![Method: QFontMetricsF::boundingRect](https://img.shields.io/badge/Method-QFontMetricsF%3A%3AboundingRect-blue) ![Method: QFontMetricsF::tightBoundingRect](https://img.shields.io/badge/Method-QFontMetricsF%3A%3AtightBoundingRect-blue)
+
+---
+
+## qPainter_029
+- [qPainter_029](../qPainter_029)
+- **Brief**: Measuring text with layout constraints (like word wrapping) using `QPainter::boundingRect()`.
+
+**Topics:**
+- Establishing a constraint `QRectF` column for text to flow inside.
+- Combining alignment and word-wrap flags using bitwise OR (`Qt::TextWordWrap | Qt::AlignTop | Qt::AlignLeft`).
+- Calculating the resulting bounding box via `QPainter::boundingRect()` that simulates these constraints without drawing.
+- Using `QPainter::drawText()` with the exact same constraint box and flags to perfectly match the calculated measurement.
+
+**Key Takeaway: Constrained Layouts**
+- Unlike `QFontMetrics` which evaluates a raw string linearly, `QPainter::boundingRect(constraintBox, flags, text)` applies UI layout logic. It wraps words, aligns text, and returns the actual height and width consumed within your constraints. This is critical for drawing multi-line text dynamically!
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +boundingRect(rectangle: QRectF, flags: int, text: QString) QRectF
+        +drawText(rectangle: QRectF, flags: int, text: QString, boundingRect: QRectF*) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+```
+
+![Method: QPainter::boundingRect](https://img.shields.io/badge/Method-QPainter%3A%3AboundingRect-blue)

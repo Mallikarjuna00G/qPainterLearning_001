@@ -70,7 +70,7 @@ This document serves as the master tracking sheet and context anchor to ensure w
   - ✅ Vector calculations: Calculate tangents and midpoints along curves to place arrowheads dynamically
     - [qPainter_027](../qPainter_027)
 
-- ⏳ **Day 5: Text Metrics, Anchors, Clipping & Composition Modes**
+- ✅ **Day 5: Text Metrics, Anchors, Clipping & Composition Modes**
   - ✅ Precise text measurements: Measure text bounding boxes using [QFontMetricsF::boundingRect()](https://doc.qt.io/qt-6.8/qfontmetricsf.html#boundingRect) and [QPainter::boundingRect()](https://doc.qt.io/qt-6.8/qpainter.html#boundingRect-1)
     - [qPainter_028](../qPainter_028)
     - [qPainter_029](../qPainter_029)
@@ -78,7 +78,8 @@ This document serves as the master tracking sheet and context anchor to ensure w
     - [qPainter_030](../qPainter_030)
   - ✅ Clipping regions: Restrict rendering areas using [QPainter::setClipRect()](https://doc.qt.io/qt-6.8/qpainter.html#setClipRect), [QPainter::setClipRegion()](https://doc.qt.io/qt-6.8/qpainter.html#setClipRegion), [QPainter::setClipPath()](https://doc.qt.io/qt-6.8/qpainter.html#setClipPath), and query clip state with [QPainter::hasClipping()](https://doc.qt.io/qt-6.8/qpainter.html#hasClipping), [QPainter::clipRegion()](https://doc.qt.io/qt-6.8/qpainter.html#clipRegion), and [QPainter::clipPath()](https://doc.qt.io/qt-6.8/qpainter.html#clipPath)
     - [qPainter_031](../qPainter_031)
-  - ⏳ Composition Modes: Apply Porter-Duff compositing rules using [QPainter::setCompositionMode()](https://doc.qt.io/qt-6.8/qpainter.html#setCompositionMode) and test modes like [QPainter::CompositionMode_SourceOver](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum), [QPainter::CompositionMode_Source](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum), and [QPainter::CompositionMode_Clear](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum)
+  - ✅ Composition Modes: Apply Porter-Duff compositing rules using [QPainter::setCompositionMode()](https://doc.qt.io/qt-6.8/qpainter.html#setCompositionMode) and test modes like [QPainter::CompositionMode_SourceOver](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum), [QPainter::CompositionMode_Source](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum), and [QPainter::CompositionMode_Clear](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum)
+    - [qPainter_032](../qPainter_032)
 
 - ⏳ **Day 6: Images, Pixmaps, Pictures & Performance Optimization**
   - ⏳ Raster images & pixmaps: Draw pixmaps and images using [QPainter::drawPixmap()](https://doc.qt.io/qt-6.8/qpainter.html#drawPixmap), [QPainter::drawImage()](https://doc.qt.io/qt-6.8/qpainter.html#drawImage), and [QPainter::drawTiledPixmap()](https://doc.qt.io/qt-6.8/qpainter.html#drawTiledPixmap)

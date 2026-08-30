@@ -1688,3 +1688,44 @@ classDiagram
 ```
 
 ![Method: QPainter::hasClipping](https://img.shields.io/badge/Method-QPainter%3A%3AhasClipping-blue) ![Method: QPainter::setClipPath](https://img.shields.io/badge/Method-QPainter%3A%3AsetClipPath-blue) ![Method: QPainter::setClipping](https://img.shields.io/badge/Method-QPainter%3A%3AsetClipping-blue) ![Method: QPainterPath::addEllipse](https://img.shields.io/badge/Method-QPainterPath%3A%3AaddEllipse-blue)
+
+---
+
+## qPainter_032
+- [qPainter_032](../qPainter_032)
+- **Brief**: Applying Porter-Duff compositing rules to blend overlapping pixels.
+
+**Topics:**
+- Demonstrating the default blending mode (`CompositionMode_SourceOver`).
+- Replacing destination pixels entirely with source pixels using `CompositionMode_Source`.
+- Utilizing `CompositionMode_Clear` to act as an eraser, completely wiping out pixels to reveal a translucent widget background.
+- Understanding the difference between Source (the new drawing) and Destination (the pixels already present on the canvas).
+
+**Key Takeaway: Porter-Duff Erasers**
+- Setting the composition mode to `QPainter::CompositionMode_Clear` is incredibly useful for UI tasks where you need to "punch a hole" through a solid background (for instance, creating a dimming overlay with a clear spotlight in the middle to highlight a tutorial element).
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        +resize(w: int, h: int) void
+        +setAttribute(attribute: Qt::WidgetAttribute, on: bool = true) void
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +setCompositionMode(mode: CompositionMode) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+```
+
+![Method: QPainter::setCompositionMode](https://img.shields.io/badge/Method-QPainter%3A%3AsetCompositionMode-blue)

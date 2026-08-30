@@ -1642,3 +1642,49 @@ classDiagram
 ```
 
 ![Method: QPainter::fillRect](https://img.shields.io/badge/Method-QPainter%3A%3AfillRect-blue)
+
+---
+
+## qPainter_031
+- [qPainter_031](../qPainter_031)
+- **Brief**: Restricting rendering areas using `QPainterPath` clipping.
+
+**Topics:**
+- Creating a `QPainterPath` (like a circle) to act as a clipping region.
+- Querying clipping state using `hasClipping()`.
+- Applying clipping using `setClipPath()`.
+- Temporarily disabling and re-enabling clipping with `setClipping(bool)`.
+
+**Key Takeaway: Hard Geometry Cuts**
+- Clipping is incredibly powerful. Once a clip path is set, any drawing operations (even complex shapes, thick lines, or large background fills) are cleanly sliced off at the exact boundary of the clip path. This allows for effects like rounded avatars, magnifying glasses, or complex scroll view bounds without manually calculating intersections!
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +hasClipping() bool const
+        +setClipPath(path: QPainterPath) void
+        +setClipping(enable: bool) void
+    }
+    
+    class QPainterPath {
+        +addEllipse(rectangle: QRectF) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPainterPath : Instantiates
+```
+
+![Method: QPainter::hasClipping](https://img.shields.io/badge/Method-QPainter%3A%3AhasClipping-blue) ![Method: QPainter::setClipPath](https://img.shields.io/badge/Method-QPainter%3A%3AsetClipPath-blue) ![Method: QPainter::setClipping](https://img.shields.io/badge/Method-QPainter%3A%3AsetClipping-blue) ![Method: QPainterPath::addEllipse](https://img.shields.io/badge/Method-QPainterPath%3A%3AaddEllipse-blue)

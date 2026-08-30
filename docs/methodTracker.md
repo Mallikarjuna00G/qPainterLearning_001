@@ -52,7 +52,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` drawLine(const QLineF &line)
 - `[00]` drawLine(const QPoint &p1, const QPoint &p2)
 - `[00]` drawLine(const QPointF &p1, const QPointF &p2)
-- `[22]` drawLine(int x1, int y1, int x2, int y2)
+- `[24]` drawLine(int x1, int y1, int x2, int y2)
 - `[00]` drawLines(const QLine *lines, int lineCount)
 - `[00]` drawLines(const QLineF *lines, int lineCount)
 - `[00]` drawLines(const QList<QLine> &lines)
@@ -61,7 +61,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` drawLines(const QList<QPointF> &pointPairs)
 - `[00]` drawLines(const QPoint *pointPairs, int lineCount)
 - `[00]` drawLines(const QPointF *pointPairs, int lineCount)
-- `[09]` drawPath(const QPainterPath &path)
+- `[10]` drawPath(const QPainterPath &path)
 - `[00]` drawPicture(const QPoint &point, const QPicture &picture)
 - `[00]` drawPicture(const QPointF &point, const QPicture &picture)
 - `[00]` drawPicture(int x, int y, const QPicture &picture)
@@ -97,7 +97,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[04]` drawPolyline(const QPolygonF &points)
 - `[00]` drawRect(const QRect &rectangle)
 - `[07]` drawRect(const QRectF &rectangle)
-- `[17]` drawRect(int x, int y, int width, int height)
+- `[18]` drawRect(int x, int y, int width, int height)
 - `[00]` drawRects(const QList<QRect> &rectangles)
 - `[01]` drawRects(const QList<QRectF> &rectangles)
 - `[00]` drawRects(const QRect *rectangles, int rectCount)
@@ -113,7 +113,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` drawText(const QRect &rectangle, int flags, const QString &text, QRect *boundingRect = nullptr)
 - `[01]` drawText(const QRectF &rectangle, const QString &text, const QTextOption &option = QTextOption())
 - `[08]` drawText(const QRectF &rectangle, int flags, const QString &text, QRectF *boundingRect = nullptr)
-- `[22]` drawText(int x, int y, const QString &text)
+- `[24]` drawText(int x, int y, const QString &text)
 - `[00]` drawText(int x, int y, int width, int height, int flags, const QString &text, QRect *boundingRect = nullptr)
 - `[00]` drawTiledPixmap(const QRect &rectangle, const QPixmap &pixmap, const QPoint &position = QPoint())
 - `[00]` drawTiledPixmap(const QRectF &rectangle, const QPixmap &pixmap, const QPointF &position = QPointF())
@@ -126,7 +126,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[01]` fillPath(const QPainterPath &path, const QBrush &brush)
 - `[00]` fillRect(const QRect &rectangle, QGradient::Preset preset)
 - `[00]` fillRect(const QRect &rectangle, Qt::BrushStyle style)
-- `[00]` fillRect(const QRect &rectangle, Qt::GlobalColor color)
+- `[01]` fillRect(const QRect &rectangle, Qt::GlobalColor color)
 - `[00]` fillRect(const QRect &rectangle, const QBrush &brush)
 - `[00]` fillRect(const QRect &rectangle, const QColor &color)
 - `[00]` fillRect(const QRectF &rectangle, QGradient::Preset preset)
@@ -142,7 +142,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[01]` font() const
 - `[01]` fontInfo() const
 - `[01]` fontMetrics() const
-- `[00]` hasClipping() const
+- `[02]` hasClipping() const
 - `[01]` isActive() const
 - `[00]` layoutDirection() const
 - `[00]` opacity() const
@@ -160,12 +160,12 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` setBrushOrigin(const QPoint &position)
 - `[00]` setBrushOrigin(const QPointF &position)
 - `[01]` setBrushOrigin(int x, int y)
-- `[00]` setClipPath(const QPainterPath &path, Qt::ClipOperation operation = Qt::ReplaceClip)
+- `[01]` setClipPath(const QPainterPath &path, Qt::ClipOperation operation = Qt::ReplaceClip)
 - `[00]` setClipRect(const QRect &rectangle, Qt::ClipOperation operation = Qt::ReplaceClip)
 - `[00]` setClipRect(const QRectF &rectangle, Qt::ClipOperation operation = Qt::ReplaceClip)
 - `[00]` setClipRect(int x, int y, int width, int height, Qt::ClipOperation operation = Qt::ReplaceClip)
 - `[00]` setClipRegion(const QRegion &region, Qt::ClipOperation operation = Qt::ReplaceClip)
-- `[00]` setClipping(bool enable)
+- `[03]` setClipping(bool enable)
 - `[00]` setCompositionMode(
 - `[06]` setFont(const QFont &font)
 - `[02]` setLayoutDirection(Qt::LayoutDirection direction)
@@ -197,6 +197,8 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[05]` worldTransform() const
 
 ## QPainterPath Methods
+- `[00]` addEllipse(const QPointF &center, qreal rx, qreal ry)
+- `[01]` addEllipse(const QRectF &rectangle)
 - `[01]` addEllipse(int x, int y, int width, int height)
 - `[04]` closeSubpath()
 - `[12]` lineTo(int x, int y)

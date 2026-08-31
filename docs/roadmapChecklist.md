@@ -86,7 +86,8 @@ This document serves as the master tracking sheet and context anchor to ensure w
     - [qPainter_033](../qPainter_033)
   - ✅ Device Pixel Ratio: Handle high-resolution drawing by inspecting [QPixmap::devicePixelRatio()](https://doc.qt.io/qt-6.8/qpixmap.html#devicePixelRatio) on high-DPI displays
     - [qPainter_034](../qPainter_034)
-  - ⏳ Serialized recording: Record and replay drawing operations using [QPicture](https://doc.qt.io/qt-6.8/qpicture.html) and [QPainter::drawPicture()](https://doc.qt.io/qt-6.8/qpainter.html#drawPicture)
+  - ✅ Serialized recording: Record and replay drawing operations using [QPicture](https://doc.qt.io/qt-6.8/qpicture.html) and [QPainter::drawPicture()](https://doc.qt.io/qt-6.8/qpainter.html#drawPicture)
+    - [qPainter_035](../qPainter_035)
   - ⏳ Image scaling quality: Test the [QPainter::SmoothPixmapTransform](https://doc.qt.io/qt-6.8/qpainter.html#RenderHint-enum) render hint to handle scaling interpolation smoothly
   - ⏳ Rendering hints query: Inspect all active state hints at runtime using [QPainter::renderHints()](https://doc.qt.io/qt-6.8/qpainter.html#renderHints)
   - ⏳ Performance and formats: Test performance difference on Raster backend formats (premultiplied [QImage::Format_ARGB32_Premultiplied](https://doc.qt.io/qt-6.8/qimage.html#Format-enum), [QImage::Format_RGB32](https://doc.qt.io/qt-6.8/qimage.html#Format-enum)) and learn how OpenGL graphics acceleration works with [QOpenGLWidget](https://doc.qt.io/qt-6.8/qopenglwidget.html)

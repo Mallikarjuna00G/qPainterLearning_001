@@ -1831,3 +1831,54 @@ classDiagram
 ```
 
 ![Method: QPixmap::fill](https://img.shields.io/badge/Method-QPixmap%3A%3Afill-blue) ![Method: QPixmap::setDevicePixelRatio](https://img.shields.io/badge/Method-QPixmap%3A%3AsetDevicePixelRatio-blue)
+
+---
+
+## qPainter_035
+- [qPainter_035](../qPainter_035)
+- **Brief**: Serializing and replaying drawing commands using `QPicture`.
+
+**Topics:**
+- Creating a `QPicture` to act as an invisible recording canvas.
+- Using a `QPainter` to serialize drawing commands into the `QPicture` rather than rendering them to a screen.
+- Saving the recorded vector commands to a highly compressed, proprietary binary Qt format file (`.pic`).
+- Loading the `QPicture` binary file from disk and executing the instructions onto a physical canvas using `QPainter::drawPicture()`.
+- Understanding the internal structure of `QPicture` files by inspecting them with a hex editor.
+
+**Key Takeaway: Vector Serialization**
+- `QPicture` does not save pixel data like a PNG or JPG. It saves the actual sequence of vector instructions (e.g. `drawEllipse`, `setPen`). This makes `.pic` files incredibly small, and it allows them to be scaled infinitely without any loss of quality when replayed!
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QPaintDevice <|-- QPicture
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        +resize(w: int, h: int) void
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +begin(device: QPaintDevice*) bool
+        +end() bool
+        +drawPicture(x: int, y: int, picture: QPicture) void
+    }
+    
+    class QPicture {
+        +save(fileName: QString) bool
+        +load(fileName: QString) bool
+        +boundingRect() QRect
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPicture : Instantiates
+```
+
+![Method: QPainter::drawPicture](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPicture-blue) ![Method: QPicture::save](https://img.shields.io/badge/Method-QPicture%3A%3Asave-blue) ![Method: QPicture::load](https://img.shields.io/badge/Method-QPicture%3A%3Aload-blue) ![Method: QPicture::boundingRect](https://img.shields.io/badge/Method-QPicture%3A%3AboundingRect-blue)

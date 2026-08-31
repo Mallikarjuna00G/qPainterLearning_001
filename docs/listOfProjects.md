@@ -1974,3 +1974,57 @@ classDiagram
 ```
 
 ![Method: QPainter::renderHints](https://img.shields.io/badge/Method-QPainter%3A%3ArenderHints-blue) ![Method: QPainter::testRenderHint](https://img.shields.io/badge/Method-QPainter%3A%3AtestRenderHint-blue)
+
+---
+
+## qPainter_038
+- [qPainter_038](../qPainter_038)
+- **Brief**: Stress-testing CPU raster performance and comparing standard vs. premultiplied alpha formats.
+
+**Topics:**
+- Drawing 10,000 semi-transparent ellipses to benchmark the Raster engine CPU performance.
+- Using `QElapsedTimer` to calculate execution time in milliseconds.
+- Discovering the massive performance optimizations of `QImage::Format_ARGB32_Premultiplied` (where alpha math is pre-calculated) over standard `QImage::Format_ARGB32`.
+- Understanding how to enable GPU hardware acceleration by promoting a `QWidget` base class to a `QOpenGLWidget`.
+
+**Key Takeaway: Alpha Blending is Expensive**
+- Alpha blending requires the CPU to do math on every single pixel it overlaps. Using `Format_ARGB32_Premultiplied` can literally double your rendering speed when drawing heavy transparencies on the CPU. If you need even more speed, swap to `QOpenGLWidget` to push the instructions to the GPU.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QPaintDevice <|-- QImage
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    QWidget <|-- QOpenGLWidget
+    
+    class QWidget {
+        +resize(w: int, h: int) void
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class QOpenGLWidget {
+        +initializeGL() virtual void
+        +paintGL() virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +drawEllipse(x: int, y: int, w: int, h: int) void
+        +drawImage(x: int, y: int, image: QImage) void
+    }
+    
+    class QImage {
+        +fill(color: QColor) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QImage : Instantiates
+    CanvasWidget ..> QOpenGLWidget : Can Inherit From (for GPU)
+```
+
+![Method: QPainter::drawImage](https://img.shields.io/badge/Method-QPainter%3A%3AdrawImage-blue) ![Method: QPainter::drawEllipse](https://img.shields.io/badge/Method-QPainter%3A%3AdrawEllipse-blue)

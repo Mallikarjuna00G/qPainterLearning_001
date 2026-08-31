@@ -81,7 +81,7 @@ This document serves as the master tracking sheet and context anchor to ensure w
   - ✅ Composition Modes: Apply Porter-Duff compositing rules using [QPainter::setCompositionMode()](https://doc.qt.io/qt-6.8/qpainter.html#setCompositionMode) and test modes like [QPainter::CompositionMode_SourceOver](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum), [QPainter::CompositionMode_Source](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum), and [QPainter::CompositionMode_Clear](https://doc.qt.io/qt-6.8/qpainter.html#CompositionMode-enum)
     - [qPainter_032](../qPainter_032)
 
-- ⏳ **Day 6: Images, Pixmaps, Pictures & Performance Optimization**
+- ✅ **Day 6: Images, Pixmaps, Pictures & Performance Optimization**
   - ✅ Raster images & pixmaps: Draw pixmaps and images using [QPainter::drawPixmap()](https://doc.qt.io/qt-6.8/qpainter.html#drawPixmap), [QPainter::drawImage()](https://doc.qt.io/qt-6.8/qpainter.html#drawImage), and [QPainter::drawTiledPixmap()](https://doc.qt.io/qt-6.8/qpainter.html#drawTiledPixmap)
     - [qPainter_033](../qPainter_033)
   - ✅ Device Pixel Ratio: Handle high-resolution drawing by inspecting [QPixmap::devicePixelRatio()](https://doc.qt.io/qt-6.8/qpixmap.html#devicePixelRatio) on high-DPI displays
@@ -92,7 +92,8 @@ This document serves as the master tracking sheet and context anchor to ensure w
     - [qPainter_036](../qPainter_036)
   - ✅ Rendering hints query: Inspect all active state hints at runtime using [QPainter::renderHints()](https://doc.qt.io/qt-6.8/qpainter.html#renderHints)
     - [qPainter_037](../qPainter_037)
-  - ⏳ Performance and formats: Test performance difference on Raster backend formats (premultiplied [QImage::Format_ARGB32_Premultiplied](https://doc.qt.io/qt-6.8/qimage.html#Format-enum), [QImage::Format_RGB32](https://doc.qt.io/qt-6.8/qimage.html#Format-enum)) and learn how OpenGL graphics acceleration works with [QOpenGLWidget](https://doc.qt.io/qt-6.8/qopenglwidget.html)
+  - ✅ Performance and formats: Test performance difference on Raster backend formats (premultiplied [QImage::Format_ARGB32_Premultiplied](https://doc.qt.io/qt-6.8/qimage.html#Format-enum), [QImage::Format_RGB32](https://doc.qt.io/qt-6.8/qimage.html#Format-enum)) and learn how OpenGL graphics acceleration works with [QOpenGLWidget](https://doc.qt.io/qt-6.8/qopenglwidget.html)
+    - [qPainter_038](../qPainter_038)
 
 - ⏳ **Day 7: Document Serialization (SVG/PDF) & Procedural Graph Mini-Engine**
   - ⏳ SVG generator: Set up a CMake project targeting `Qt6::Svg` and redirect painting to [QSvgGenerator](https://doc.qt.io/qt-6.8/qsvggenerator.html) to produce vector XML output

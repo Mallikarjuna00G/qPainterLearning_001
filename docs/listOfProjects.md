@@ -1729,3 +1729,55 @@ classDiagram
 ```
 
 ![Method: QPainter::setCompositionMode](https://img.shields.io/badge/Method-QPainter%3A%3AsetCompositionMode-blue)
+
+---
+
+## qPainter_033
+- [qPainter_033](../qPainter_033)
+- **Brief**: Drawing raster images and pixmaps, and exploring tiling.
+
+**Topics:**
+- Generating a pixel-perfect checkerboard pattern dynamically using `QImage` and `setPixelColor()`.
+- Converting a `QImage` into a `QPixmap` for hardware-accelerated rendering.
+- Drawing images using `QPainter::drawImage()` and `QPainter::drawPixmap()`.
+- Efficiently repeating a texture to fill a massive background area using `QPainter::drawTiledPixmap()`.
+
+**Key Takeaway: Image vs Pixmap**
+- `QImage` is optimized for I/O and direct pixel manipulation on the CPU. `QPixmap` is optimized for displaying on the screen (often via GPU). For static UI assets, always convert to `QPixmap` and use `drawPixmap()` or `drawTiledPixmap()` for maximum performance.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        +resize(w: int, h: int) void
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +drawImage(x: int, y: int, image: QImage) void
+        +drawPixmap(x: int, y: int, pixmap: QPixmap) void
+        +drawTiledPixmap(x: int, y: int, width: int, height: int, pixmap: QPixmap) void
+    }
+    
+    class QImage {
+        +setPixelColor(x: int, y: int, color: QColor) void
+    }
+    
+    class QPixmap {
+        +fromImage(image: QImage)$ QPixmap
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QImage : Instantiates
+    CanvasWidget ..> QPixmap : Instantiates
+```
+
+![Method: QPainter::drawImage](https://img.shields.io/badge/Method-QPainter%3A%3AdrawImage-blue) ![Method: QPainter::drawPixmap](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPixmap-blue) ![Method: QPainter::drawTiledPixmap](https://img.shields.io/badge/Method-QPainter%3A%3AdrawTiledPixmap-blue)

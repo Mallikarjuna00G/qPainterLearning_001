@@ -1781,3 +1781,53 @@ classDiagram
 ```
 
 ![Method: QPainter::drawImage](https://img.shields.io/badge/Method-QPainter%3A%3AdrawImage-blue) ![Method: QPainter::drawPixmap](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPixmap-blue) ![Method: QPainter::drawTiledPixmap](https://img.shields.io/badge/Method-QPainter%3A%3AdrawTiledPixmap-blue)
+
+---
+
+## qPainter_034
+- [qPainter_034](../qPainter_034)
+- **Brief**: Managing high-resolution drawing on high-DPI displays by manipulating `devicePixelRatio`.
+
+**Topics:**
+- Creating and filling a `QPixmap` programmatically.
+- Rendering an image using the default `1.0` pixel ratio where 1 physical pixel maps to 1 logical screen coordinate.
+- Handling "Retina" or high-density graphics by manually scaling the ratio via `QPixmap::setDevicePixelRatio()`.
+- Understanding how Qt automatically compresses a high-resolution pixmap into a smaller logical area on-screen to preserve crispness.
+
+**Key Takeaway: The Mathematics of Device Pixel Ratio**
+- The "Device Pixel Ratio" represents the **linear scale factor** (1D dimension) of an image or screen. 
+- A ratio of `2.0` (like Apple's Retina display standard) means that a single logical pixel coordinate on the screen is rendered using 2 physical pixels on the X-axis and 2 physical pixels on the Y-axis.
+- Since pixels are 2D squares on a grid, a `2.0` linear ratio maps a **2x2 grid of physical pixels** into **1 logical pixel**. 
+- Mathematically, this means there are exactly **4 physical pixels for every 1 logical pixel**. 
+- However, industry phrasing (such as iOS `@2x` assets) usually defaults to describing the 1D scale. Therefore, you will frequently hear developers describe this as *"2 physical pixels for every 1 logical pixel,"* referring strictly to the linear ratio, even though the area contains 4.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        +resize(w: int, h: int) void
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +drawPixmap(x: int, y: int, pixmap: QPixmap) void
+    }
+    
+    class QPixmap {
+        +fill(color: QColor) void
+        +setDevicePixelRatio(scaleFactor: qreal) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPixmap : Instantiates
+```
+
+![Method: QPixmap::fill](https://img.shields.io/badge/Method-QPixmap%3A%3Afill-blue) ![Method: QPixmap::setDevicePixelRatio](https://img.shields.io/badge/Method-QPixmap%3A%3AsetDevicePixelRatio-blue)

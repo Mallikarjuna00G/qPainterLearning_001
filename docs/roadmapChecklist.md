@@ -84,7 +84,8 @@ This document serves as the master tracking sheet and context anchor to ensure w
 - ⏳ **Day 6: Images, Pixmaps, Pictures & Performance Optimization**
   - ✅ Raster images & pixmaps: Draw pixmaps and images using [QPainter::drawPixmap()](https://doc.qt.io/qt-6.8/qpainter.html#drawPixmap), [QPainter::drawImage()](https://doc.qt.io/qt-6.8/qpainter.html#drawImage), and [QPainter::drawTiledPixmap()](https://doc.qt.io/qt-6.8/qpainter.html#drawTiledPixmap)
     - [qPainter_033](../qPainter_033)
-  - ⏳ Device Pixel Ratio: Handle high-resolution drawing by inspecting [QPixmap::devicePixelRatio()](https://doc.qt.io/qt-6.8/qpixmap.html#devicePixelRatio) on high-DPI displays
+  - ✅ Device Pixel Ratio: Handle high-resolution drawing by inspecting [QPixmap::devicePixelRatio()](https://doc.qt.io/qt-6.8/qpixmap.html#devicePixelRatio) on high-DPI displays
+    - [qPainter_034](../qPainter_034)
   - ⏳ Serialized recording: Record and replay drawing operations using [QPicture](https://doc.qt.io/qt-6.8/qpicture.html) and [QPainter::drawPicture()](https://doc.qt.io/qt-6.8/qpainter.html#drawPicture)
   - ⏳ Image scaling quality: Test the [QPainter::SmoothPixmapTransform](https://doc.qt.io/qt-6.8/qpainter.html#RenderHint-enum) render hint to handle scaling interpolation smoothly
   - ⏳ Rendering hints query: Inspect all active state hints at runtime using [QPainter::renderHints()](https://doc.qt.io/qt-6.8/qpainter.html#renderHints)

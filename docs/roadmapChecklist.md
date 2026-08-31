@@ -102,4 +102,3 @@ This document serves as the master tracking sheet and context anchor to ensure w
     - [qPainter_040](../qPainter_040)
   - ✅ PDF writer: Export high-quality print documents by redirecting painting to [QPdfWriter](https://doc.qt.io/qt-6.8/qpdfwriter.html)
     - [qPainter_041](../qPainter_041)
-  - ⏳ TikZ-Style Mini-Engine: Build an application with a `Node` structure (text, bounding box, anchor points) and connect them procedurally using curved Bézier paths, rendering simultaneously to screen (widget), SVG, and PDF

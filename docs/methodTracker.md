@@ -1,5 +1,12 @@
 # QPainter Method Heatmap
 
+> [!NOTE]
+> **Completion Summary**
+> This repository covers the core conceptual capabilities of `QPainter` entirely. 
+> While many integer and pointer-based method overloads remain at `[00]`, their underlying concepts (e.g., `drawArc`, `drawPie`, `setCompositionMode`, `setViewport`) were successfully implemented using their modern floating-point (`QRectF`, `QPolygonF`) equivalents.
+> 
+> *The only major edge-case capabilities purposefully omitted from this curriculum are raw glyph rendering (`drawGlyphRun`), global transparency overrides (`setOpacity`), and legacy QPicture playback (`drawPicture`).*
+
 This file tracks our usage and mastery of every single `QPainter` method. As we use a method in our projects, increment its counter.
 
 - `[00]` CompositionMode

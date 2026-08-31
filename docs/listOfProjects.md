@@ -2076,3 +2076,47 @@ classDiagram
 ```
 
 ![Class: QSvgGenerator](https://img.shields.io/badge/Class-QSvgGenerator-green) ![Method: QSvgGenerator::setSize](https://img.shields.io/badge/Method-QSvgGenerator%3A%3AsetSize-blue) ![Method: QSvgGenerator::setViewBox](https://img.shields.io/badge/Method-QSvgGenerator%3A%3AsetViewBox-blue)
+
+---
+
+## qPainter_040
+- [qPainter_040](../qPainter_040)
+- **Brief**: Serializing drawing commands into a pixel-based PNG file by rendering to a `QImage`.
+
+**Topics:**
+- Allocating a raw memory buffer (`QImage::Format_ARGB32`) to act as a paint device.
+- Initializing the pixel grid with a default background using `QImage::fill()`.
+- Dumping the memory buffer to a compressed `.png` file using `QImage::save()`.
+
+**Key Takeaway: Vector vs Raster Serialization**
+- Unlike `QSvgGenerator` or `QPdfWriter` which stream mathematical vector commands directly to disk in real-time, PNG generation requires allocating the final pixel grid in memory first, drawing the pixels, and then running a compression pass (`save()`) to dump the memory to a file.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QPaintDevice <|-- QImage
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+        -exportToPng() void
+    }
+    
+    class QPainter {
+        +begin(device: QPaintDevice*) bool
+        +end() bool
+    }
+    
+    class QImage {
+        +fill(color: Qt::GlobalColor) void
+        +save(fileName: QString) bool
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QImage : Instantiates
+    CanvasWidget ..> QPushButton : Instantiates
+```
+
+![Class: QImage](https://img.shields.io/badge/Class-QImage-green) ![Method: QImage::fill](https://img.shields.io/badge/Method-QImage%3A%3Afill-blue) ![Method: QImage::save](https://img.shields.io/badge/Method-QImage%3A%3Asave-blue)

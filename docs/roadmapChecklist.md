@@ -98,5 +98,7 @@ This document serves as the master tracking sheet and context anchor to ensure w
 - ⏳ **Day 7: Document Serialization (SVG/PDF) & Procedural Graph Mini-Engine**
   - ✅ SVG generator: Set up a CMake project targeting `Qt6::Svg` and redirect painting to [QSvgGenerator](https://doc.qt.io/qt-6.8/qsvggenerator.html) to produce vector XML output
     - [qPainter_039](../qPainter_039)
+  - ✅ PNG generator: Export pixel-based raster graphics by rendering to a [QImage](https://doc.qt.io/qt-6.8/qimage.html) and calling `save()`
+    - [qPainter_040](../qPainter_040)
   - ⏳ PDF writer: Export high-quality print documents by redirecting painting to [QPdfWriter](https://doc.qt.io/qt-6.8/qpdfwriter.html)
   - ⏳ TikZ-Style Mini-Engine: Build an application with a `Node` structure (text, bounding box, anchor points) and connect them procedurally using curved Bézier paths, rendering simultaneously to screen (widget), SVG, and PDF

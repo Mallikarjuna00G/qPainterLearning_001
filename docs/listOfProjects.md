@@ -2120,3 +2120,52 @@ classDiagram
 ```
 
 ![Class: QImage](https://img.shields.io/badge/Class-QImage-green) ![Method: QImage::fill](https://img.shields.io/badge/Method-QImage%3A%3Afill-blue) ![Method: QImage::save](https://img.shields.io/badge/Method-QImage%3A%3Asave-blue)
+
+---
+
+## qPainter_041
+- [qPainter_041](../qPainter_041)
+- **Brief**: Generating high-resolution, multi-page print documents using `QPdfWriter`.
+
+**Topics:**
+- Exporting drawings to PDF by targeting a `QPdfWriter` paint device.
+- Configuring physical print properties such as `QPageSize`, margins, and DPI resolution.
+- Understanding the difference between logical pixels and physical print dots, and the critical distinction between setting `QFont` sizes in *points* vs *pixels*.
+- Generating multi-page documents by explicitly calling `QPdfWriter::newPage()`.
+- Applying `QPainter::scale()` to visually preview massive print coordinates on a low-resolution screen widget.
+
+**Key Takeaway: DPI Scaling and Coordinate Space**
+- Physical printers operate at much higher resolutions (e.g., 300 DPI) than computer monitors. When drawing to a PDF, your coordinate system scales up massively. If you rely on point-sized fonts (`setPointSize()`), the OS automatically scales them up to match the DPI, which can blow apart fixed-pixel layouts. Hardcoding pixel sizes (`setPixelSize()`) ensures the typography scales perfectly with your raw drawing coordinates.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QPaintDevice <|-- QPdfWriter
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+        -exportToPdf() void
+    }
+    
+    class QPainter {
+        +begin(device: QPaintDevice*) bool
+        +end() bool
+        +scale(sx: qreal, sy: qreal) void
+    }
+    
+    class QPdfWriter {
+        +setPageSize(size: QPageSize) void
+        +setPageMargins(margins: QMarginsF, units: QPageLayout::Unit) void
+        +setResolution(resolution: int) void
+        +newPage() bool
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QPdfWriter : Instantiates
+    CanvasWidget ..> QPushButton : Instantiates
+```
+
+![Class: QPdfWriter](https://img.shields.io/badge/Class-QPdfWriter-green) ![Method: QPdfWriter::newPage](https://img.shields.io/badge/Method-QPdfWriter%3A%3AnewPage-blue) ![Method: QPdfWriter::setResolution](https://img.shields.io/badge/Method-QPdfWriter%3A%3AsetResolution-blue) ![Method: QPdfWriter::setPageSize](https://img.shields.io/badge/Method-QPdfWriter%3A%3AsetPageSize-blue)

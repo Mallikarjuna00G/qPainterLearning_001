@@ -1882,3 +1882,54 @@ classDiagram
 ```
 
 ![Method: QPainter::drawPicture](https://img.shields.io/badge/Method-QPainter%3A%3AdrawPicture-blue) ![Method: QPicture::save](https://img.shields.io/badge/Method-QPicture%3A%3Asave-blue) ![Method: QPicture::load](https://img.shields.io/badge/Method-QPicture%3A%3Aload-blue) ![Method: QPicture::boundingRect](https://img.shields.io/badge/Method-QPicture%3A%3AboundingRect-blue)
+
+---
+
+## qPainter_036
+- [qPainter_036](../qPainter_036)
+- **Brief**: Managing interpolation algorithms when scaling images using `SmoothPixmapTransform`.
+
+**Topics:**
+- Creating a tiny 10x10 piece of pixel art using `QImage`.
+- Scaling a `QPixmap` up massively when drawing it.
+- Demonstrating the default interpolation method (Nearest-Neighbor), which perfectly preserves sharp, blocky pixel edges.
+- Enabling the `QPainter::SmoothPixmapTransform` render hint to switch to Bilinear interpolation, which creates a smooth, blurred result.
+
+**Key Takeaway: Interpolation Matters**
+- Whenever you scale an image, the renderer must guess what pixels to insert. Use the default (Nearest-Neighbor) for pixel-art, barcodes, and sharp graphics. Use `SmoothPixmapTransform` (Bilinear) for photographs or realistic textures where harsh square pixels would look ugly.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        +resize(w: int, h: int) void
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +setRenderHint(hint: RenderHint, on: bool) void
+        +drawPixmap(x: int, y: int, w: int, h: int, pixmap: QPixmap) void
+    }
+    
+    class QImage {
+        +setPixelColor(x: int, y: int, color: QColor) void
+    }
+    
+    class QPixmap {
+        +fromImage(image: QImage)$ QPixmap
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QImage : Instantiates
+    CanvasWidget ..> QPixmap : Instantiates
+```
+
+![Method: QPainter::setRenderHint](https://img.shields.io/badge/Method-QPainter%3A%3AsetRenderHint-blue)

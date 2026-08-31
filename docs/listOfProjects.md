@@ -1956,7 +1956,7 @@ classDiagram
     
     class QWidget {
         +resize(w: int, h: int) void
-        #paintEvent(event: QPaintEvent*) virtual void
+        #paintEvent(event: QPaintEvent*) void
     }
     
     class CanvasWidget {
@@ -2000,12 +2000,12 @@ classDiagram
     
     class QWidget {
         +resize(w: int, h: int) void
-        #paintEvent(event: QPaintEvent*) virtual void
+        #paintEvent(event: QPaintEvent*) void
     }
     
     class QOpenGLWidget {
-        +initializeGL() virtual void
-        +paintGL() virtual void
+        +initializeGL() void
+        +paintGL() void
     }
     
     class CanvasWidget {

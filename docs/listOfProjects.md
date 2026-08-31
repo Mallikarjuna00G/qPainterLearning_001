@@ -1933,3 +1933,44 @@ classDiagram
 ```
 
 ![Method: QPainter::setRenderHint](https://img.shields.io/badge/Method-QPainter%3A%3AsetRenderHint-blue)
+
+---
+
+## qPainter_037
+- [qPainter_037](../qPainter_037)
+- **Brief**: Inspecting the active state of the `QPainter` rendering engine using `renderHints()`.
+
+**Topics:**
+- Querying the active flags of the rendering engine at runtime.
+- Understanding how to test the `QPainter::RenderHints` bitmask using `testFlag()`.
+- Uncovering hidden default behaviors (e.g., `QPainter::TextAntialiasing` is enabled by default to protect text readability, whereas standard `QPainter::Antialiasing` for shapes is disabled by default).
+
+**Key Takeaway: Independent Hinting Flags**
+- Toggling a master state like `QPainter::Antialiasing` does NOT toggle `QPainter::TextAntialiasing`. They are completely independent rendering flags that target different aspects of the pipeline.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class QWidget {
+        +resize(w: int, h: int) void
+        #paintEvent(event: QPaintEvent*) virtual void
+    }
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+    }
+    
+    class QPainter {
+        +renderHints() RenderHints
+        +testRenderHint(hint: RenderHint) bool
+        +setRenderHint(hint: RenderHint, on: bool) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+```
+
+![Method: QPainter::renderHints](https://img.shields.io/badge/Method-QPainter%3A%3ArenderHints-blue) ![Method: QPainter::testRenderHint](https://img.shields.io/badge/Method-QPainter%3A%3AtestRenderHint-blue)

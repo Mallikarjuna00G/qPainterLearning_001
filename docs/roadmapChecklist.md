@@ -90,7 +90,8 @@ This document serves as the master tracking sheet and context anchor to ensure w
     - [qPainter_035](../qPainter_035)
   - ✅ Image scaling quality: Test the [QPainter::SmoothPixmapTransform](https://doc.qt.io/qt-6.8/qpainter.html#RenderHint-enum) render hint to handle scaling interpolation smoothly
     - [qPainter_036](../qPainter_036)
-  - ⏳ Rendering hints query: Inspect all active state hints at runtime using [QPainter::renderHints()](https://doc.qt.io/qt-6.8/qpainter.html#renderHints)
+  - ✅ Rendering hints query: Inspect all active state hints at runtime using [QPainter::renderHints()](https://doc.qt.io/qt-6.8/qpainter.html#renderHints)
+    - [qPainter_037](../qPainter_037)
   - ⏳ Performance and formats: Test performance difference on Raster backend formats (premultiplied [QImage::Format_ARGB32_Premultiplied](https://doc.qt.io/qt-6.8/qimage.html#Format-enum), [QImage::Format_RGB32](https://doc.qt.io/qt-6.8/qimage.html#Format-enum)) and learn how OpenGL graphics acceleration works with [QOpenGLWidget](https://doc.qt.io/qt-6.8/qopenglwidget.html)
 
 - ⏳ **Day 7: Document Serialization (SVG/PDF) & Procedural Graph Mini-Engine**

@@ -2028,3 +2028,51 @@ classDiagram
 ```
 
 ![Method: QPainter::drawImage](https://img.shields.io/badge/Method-QPainter%3A%3AdrawImage-blue) ![Method: QPainter::drawEllipse](https://img.shields.io/badge/Method-QPainter%3A%3AdrawEllipse-blue)
+
+---
+
+## qPainter_039
+- [qPainter_039](../qPainter_039)
+- **Brief**: Serializing drawing commands into an infinitely scalable SVG file using `QSvgGenerator`.
+
+**Topics:**
+- Linking against the `Qt6::Svg` module in CMake.
+- Creating a decoupled drawing function (`drawMyArt()`) that can target both a `QWidget` screen and a `QSvgGenerator` file simultaneously.
+- Setting physical properties of the generated file using `QSvgGenerator::setSize()`.
+- Understanding why `QSvgGenerator::setViewBox()` is critical to ensure the generated SVG document scales correctly in web browsers without cropping.
+
+**Key Takeaway: The Power of ViewBox**
+- Standard images rely on fixed pixels. SVGs rely on a mathematical `viewBox`. By explicitly defining the coordinate space of your drawing area with `setViewBox`, you guarantee that any SVG renderer (browsers, Illustrator) can mathematically scale your graphic to any window size perfectly.
+
+```mermaid
+classDiagram
+    QPaintDevice <|-- QWidget
+    QPaintDevice <|-- QSvgGenerator
+    QObject <|-- QWidget
+    QWidget <|-- CanvasWidget
+    
+    class CanvasWidget {
+        +~CanvasWidget() override
+        #paintEvent(event: QPaintEvent*) override void
+        -exportToSvg() void
+    }
+    
+    class QPainter {
+        +begin(device: QPaintDevice*) bool
+        +end() bool
+    }
+    
+    class QSvgGenerator {
+        +setFileName(fileName: QString) void
+        +setSize(size: QSize) void
+        +setViewBox(viewBox: QRect) void
+        +setTitle(title: QString) void
+        +setDescription(description: QString) void
+    }
+    
+    CanvasWidget ..> QPainter : Instantiates
+    CanvasWidget ..> QSvgGenerator : Instantiates
+    CanvasWidget ..> QPushButton : Instantiates
+```
+
+![Class: QSvgGenerator](https://img.shields.io/badge/Class-QSvgGenerator-green) ![Method: QSvgGenerator::setSize](https://img.shields.io/badge/Method-QSvgGenerator%3A%3AsetSize-blue) ![Method: QSvgGenerator::setViewBox](https://img.shields.io/badge/Method-QSvgGenerator%3A%3AsetViewBox-blue)

@@ -102,3 +102,7 @@ This document serves as the master tracking sheet and context anchor to ensure w
     - [qPainter_040](../qPainter_040)
   - ✅ PDF writer: Export high-quality print documents by redirecting painting to [QPdfWriter](https://doc.qt.io/qt-6.8/qpdfwriter.html)
     - [qPainter_041](../qPainter_041)
+
+- ✅ **Practice Sandboxes**
+  - ✅ Custom Rounded Polygons (`qPainterPractice_001`)
+    - [qPainterPractice_001](../qPainterPractice_001)

@@ -68,7 +68,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` drawLines(const QList<QPointF> &pointPairs)
 - `[00]` drawLines(const QPoint *pointPairs, int lineCount)
 - `[00]` drawLines(const QPointF *pointPairs, int lineCount)
-- `[10]` drawPath(const QPainterPath &path)
+- `[12]` drawPath(const QPainterPath &path)
 - `[00]` drawPicture(const QPoint &point, const QPicture &picture)
 - `[00]` drawPicture(const QPointF &point, const QPicture &picture)
 - `[02]` drawPicture(int x, int y, const QPicture &picture)
@@ -159,7 +159,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[21]` restore()
 - `[02]` rotate(qreal angle)
 - `[21]` save()
-- `[03]` scale(qreal sx, qreal sy)
+- `[04]` scale(qreal sx, qreal sy)
 - `[01]` setBackground(const QBrush &brush)
 - `[01]` setBackgroundMode(Qt::BGMode mode)
 - `[04]` setBrush(Qt::BrushStyle style)
@@ -196,7 +196,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[00]` transform() const
 - `[00]` translate(const QPoint &offset)
 - `[01]` translate(const QPointF &offset)
-- `[24]` translate(qreal dx, qreal dy)
+- `[25]` translate(qreal dx, qreal dy)
 - `[00]` viewTransformEnabled() const
 - `[00]` viewport() const
 - `[00]` window() const
@@ -210,11 +210,13 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 - `[04]` closeSubpath()
 - `[12]` lineTo(int x, int y)
 - `[07]` moveTo(int x, int y)
-- `[01]` quadTo(int ctrlX, int ctrlY, int endX, int endY)
+- `[02]` quadTo(int ctrlX, int ctrlY, int endX, int endY)
+- `[01]` quadTo(const QPointF &c, const QPointF &endPoint)
 - `[02]` setFillRule(Qt::FillRule rule)
 - `[03]` cubicTo(int ctrl1X, int ctrl1Y, int ctrl2X, int ctrl2Y, int endX, int endY)
 - `[01]` pointAtPercent(qreal t) const
 - `[01]` angleAtPercent(qreal t) const
+- `[01]` addPolygon(const QPolygonF &polygon)
 - `[00]` ~QPainter()
 
 ## QPainterPathStroker Methods
@@ -226,3 +228,7 @@ This file tracks our usage and mastery of every single `QPainter` method. As we 
 ## QFontMetricsF Methods
 - `[01]` boundingRect(const QString &text) const
 - `[01]` tightBoundingRect(const QString &text) const
+
+## QVector2D Methods
+- `[01]` normalize()
+- `[01]` length() const

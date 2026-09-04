@@ -2169,3 +2169,54 @@ classDiagram
 ```
 
 ![Class: QPdfWriter](https://img.shields.io/badge/Class-QPdfWriter-green) ![Method: QPdfWriter::newPage](https://img.shields.io/badge/Method-QPdfWriter%3A%3AnewPage-blue) ![Method: QPdfWriter::setResolution](https://img.shields.io/badge/Method-QPdfWriter%3A%3AsetResolution-blue) ![Method: QPdfWriter::setPageSize](https://img.shields.io/badge/Method-QPdfWriter%3A%3AsetPageSize-blue)
+
+---
+
+# Practice Projects
+
+## qPainterPractice_001
+- [qPainterPractice_001](../qPainterPractice_001)
+- **Brief**: Creating custom, mathematically accurate rounded corners on arbitrary intersecting polygons using Bezier curves and vector math.
+
+**Topics:**
+- Bezier curves: [QPainterPath::quadTo()](https://doc.qt.io/qt-6.8/qpainterpath.html#quadTo)
+- Vector math: [QVector2D](https://doc.qt.io/qt-6.8/qvector2d.html), `normalize()`, `length()`
+- Safe corner rounding: The "Half-Length Rule" using `qMin()`
+
+**Key Takeaway: The Half-Length Rule & quadTo**
+- To safely round corners on connected lines without graphical glitching or overlapping curves, a curve must never consume more than half of the line it is attached to. We used `QVector2D::length()` and `qMin` to dynamically shrink the radius when corners are too close together.
+- Unlike `QPainterPath::arcTo` which requires complex bounding box calculations, `QPainterPath::quadTo` uses the sharp corner itself as a Control Point, making it mathematically much simpler to round arbitrary angles.
+
+```mermaid
+classDiagram
+    class QPainterPath {
+        +moveTo(x: qreal, y: qreal) void
+        +lineTo(x: qreal, y: qreal) void
+        +quadTo(ctrlPt: QPointF, endPt: QPointF) void
+        +addPolygon(polygon: QPolygonF) void
+    }
+    
+    class QVector2D {
+        +QVector2D(point: QPointF)
+        +normalize() void
+        +length() float
+    }
+    
+    class QPolygonF {
+        +QPolygonF()
+    }
+    
+    QObject <|-- MrPainter
+    
+    class MrPainter {
+        +run() void
+        +paintIt(painter: QPainter&, rect: const QRect&) void
+        +createRoundedCornerPolyline(points: QPolygonF, radius: qreal) QPainterPath
+    }
+    
+    MrPainter ..> QPainterPath : Instantiates
+    MrPainter ..> QVector2D : Instantiates
+    MrPainter ..> QPolygonF : Receives
+```
+
+![Class: QVector2D](https://img.shields.io/badge/Class-QVector2D-green) ![Method: QPainterPath::quadTo](https://img.shields.io/badge/Method-QPainterPath%3A%3AquadTo-blue) ![Method: QPainterPath::addPolygon](https://img.shields.io/badge/Method-QPainterPath%3A%3AaddPolygon-blue) ![Method: QVector2D::normalize](https://img.shields.io/badge/Method-QVector2D%3A%3Anormalize-blue) ![Method: QVector2D::length](https://img.shields.io/badge/Method-QVector2D%3A%3Alength-blue)
